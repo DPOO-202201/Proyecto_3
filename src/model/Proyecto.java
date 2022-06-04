@@ -656,7 +656,7 @@ import procesamiento.Plataforma;
 							
 							try {
 								// Crea el archivo
-								CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ',');
+								CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
 								
 								// Datos para identificar las columnas
 								salidaCSV.write("titulo");
