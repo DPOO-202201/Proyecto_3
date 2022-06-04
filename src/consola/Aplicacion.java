@@ -198,6 +198,9 @@
 												seleccion = true;
 											}
 
+									System.out.println(Plataforma.getProyectoActual().getActividades().get(0).getDescripcion());
+
+
 								}
 
 								if (opcion_seleccionada == 0)

@@ -297,6 +297,7 @@ import procesamiento.Plataforma;
 										
 										// Se añade el participante creado al ArrayList de participantes
 										// del proyecto
+
 											
 											participantes.add(participante);
 
@@ -351,7 +352,7 @@ import procesamiento.Plataforma;
 									
 										// Se extrae el autor de la actividad
 
-											String autor = partes[8];
+											String autor = partes[9];
 
 										// Se llama al ArrayList de participantes del proyecto
 										// que se esté manejando	
