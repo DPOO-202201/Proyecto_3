@@ -215,7 +215,7 @@
 											// el 3 es su fecha final y el 4 es su iD
 
 												
-												partes = linea.split(",");
+												partes = linea.split(";");
 
 											// Se crea un nuevo proyecto	
 

@@ -270,7 +270,7 @@ import procesamiento.Plataforma;
 
 										// Se dividen las columnas de la linea leida
 
-											partes = linea.split(",");
+											partes = linea.split(";");
 
 										// Se crea una variable para guardar si el participante
 										// de la linea leida es el dueño del proyecto
@@ -347,7 +347,7 @@ import procesamiento.Plataforma;
 									{
 										// Se dividen las columnas de la linea leida
 
-											partes = linea.split(",");
+											partes = linea.split(";");
 									
 										// Se extrae el autor de la actividad
 

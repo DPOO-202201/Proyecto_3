@@ -4,8 +4,8 @@
 	import java.io.BufferedReader;
 	import java.io.IOException;
 	import java.io.InputStreamReader;
-import model.Proyecto;
-import procesamiento.Plataforma;
+	import model.Proyecto;
+	import procesamiento.Plataforma;
 
 // Clase principal
 
@@ -188,7 +188,6 @@ import procesamiento.Plataforma;
 									// Se carga toda la informacion del proyecto
 
 										Plataforma.cargarProyecto(nombreProyecto);
-										//System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).getNombre());
 
 										if (Plataforma.getProyectoActual() == null)
 											{
@@ -253,6 +252,7 @@ import procesamiento.Plataforma;
 				Plataforma.cargarIdProyecto(Plataforma.getRutaIdProyectos());
 
 				Plataforma.cargarProyectos(Plataforma.getRutaProyectos());
+				System.out.println(Plataforma.getProyectos().get(0).getNombre());
 
 				aplicacion.ejecutarAplicacion();
 
