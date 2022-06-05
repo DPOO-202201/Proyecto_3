@@ -371,6 +371,15 @@
 																// en la linea
 
 																	Actividad actividad = new Actividad(partes[0], partes[1], partes[2], partes[3], partes[4], partes[5], partes[6], Long.parseLong(partes[7]), Boolean.parseBoolean(partes[8]), participante, Integer.parseInt(partes[10]));
+
+																// Se anexa el tipo de actividad 
+																// al ArrayList de tipos de actividad
+																// en caso de que no se encuentre
+
+																	if (!(tiposActividades.contains(partes[2])))
+																		{
+																			tiposActividades.add(partes[2]);
+																		}
 																
 																// Se extrae el ArrayList
 																// de actividades del
@@ -597,10 +606,14 @@
 			public static void anadirActividad(String titulo, String descripcion, String tipo, String fechaInicial, String fechaFinal, String horaInicial, String horaFinal, String tiempoRealizacion, String isTiempoReal, String autor)
 					{
 
+						// Se crea una variable para saber si existe el tipo de actividad ingresado
+
+							boolean existeTipoActividad = tiposActividades.contains(tipo);
+
 						// Se crea una variable para saber si existe un participante con el nombre del
 						// autor ingresado para esta nueva actividad
 
-						boolean existeParticipante = false;
+							boolean existeParticipante = false;
 
 						// Se crea un for para recorrer todo el ArrayList de paticipates del proycto actual
 
@@ -639,7 +652,7 @@
 
 						// Si se encuentra un participante con el nombre del autor ingresado			
 
-							if (existeParticipante)
+							if (existeParticipante && existeTipoActividad)
 								{
 
 									// Se añaden todas las actividades al archivo de actividades
@@ -718,7 +731,7 @@
 							else
 								{
 
-									System.out.println("\nNo se ha encontrado un participante con el nombre de autor ingresado.");
+									System.out.println("\nNo se ha encontrado un participante con el nombre de autor ingresado o no se ha encontrada o el tipo de actividad ingresado no existe.");
 
 								}
 
@@ -736,5 +749,6 @@
 						Plataforma.getProyectoActual().getTiposActividad().add(tipoActividad);
 
 				}
+
 
 	}

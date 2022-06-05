@@ -190,7 +190,7 @@
 																else
 																	{
 																		seleccion = true;
-																	}					
+																	}	
 
 														}
 
@@ -215,6 +215,7 @@
 						System.out.println("2. Registrar una nueva actividad");
 						System.out.println("3. Agregar una fecha final al proyecto");
 						System.out.println("4. Agregar un tipo de actividad al proyecto");
+						System.out.println("5. Mostrar los tipos de actividad existentes");
 						System.out.println("0. Guardar y salir del proyecto");
 
 					}
