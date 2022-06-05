@@ -10,6 +10,7 @@
 	import java.io.IOException;
 	import java.io.InputStreamReader;
 	import java.io.BufferedReader;
+	import model.Actividad;
 	import model.Participante;
 	import model.Proyecto;
 
@@ -57,85 +58,67 @@
 			
 			private static ArrayList<Proyecto> proyectos = new ArrayList<Proyecto>();
 
-		// Getter para la variable iDProyecto decalarada en la linea 26
+		// Getter para la variable iDProyecto
 
 			public static int getIdProyecto()
 				{
-
 					return iDProyecto;
-
 				}
 
-		// Getter para la variable iDProyecto decalarada en la linea 26
+		// Getter para la ruta del archivo de actividades del proyecto actual
 
 			public static String getRutaActividades()
 			{
-
 				return "./././data/Proyectos/" + Plataforma.getProyectoActual().getNombre() + "/actividades.csv";
-
 			}	
 
-		// Getter para la variable iDProyecto decalarada en la linea 26
+		// Getter para la ruta del archivo de participantes del proyecto actual
 
-		public static String getRutaParticipantes()
-		{
-
-			return "./././data/Proyectos/" + Plataforma.getProyectoActual().getNombre() + "/participantes.csv";
-
-		}	
+			public static String getRutaParticipantes()
+			{
+				return "./././data/Proyectos/" + Plataforma.getProyectoActual().getNombre() + "/participantes.csv";
+			}	
 	
-		// Getter para la variable rutaIdProyectos decalarada en la linea 26
+		// Getter para la ruta del archivo donde se guardan los iDs de proyecto
 
 			public static String getRutaIdProyectos()
 			{
-
 				return rutaIdProyectos;
-
 			}
 
-		// Getter para la variable iDActividad decalarada en la linea 26
+		// Getter para la variable iDActividad
 
 			public static int getIdActividad()
 				{
-
 					return iDActividad;
-
 				}
 
-		// Getter para la variable rutaiDActividades decalarada en la linea 26
+		// Getter para la variable rutaiDActividades
 
 			public static String getRutaIdActividades()
 				{
-
 					return rutaIdActividades;
-
 				}
 
-		// Getter para la variable proyectoActual decalarada en la linea 26
+		// Getter para la variable proyectoActual
 
 			public static Proyecto getProyectoActual()
 			{
-
 				return proyectoActual;
-
 			}
 
-		// Getter para la variable rutaProyectos decalarada en la linea 26
+		// Getter para la variable rutaProyectos
 
 			public static String getRutaProyectos()
 			{
-
 				return rutaProyectos;
-
 			}
 
-		// Getter para la variable proyectos decalarada en la linea 41
+		// Getter para el ArrayList de proyectos
 
 			public static ArrayList<Proyecto> getProyectos()
 			{
-
 				return proyectos;
-
 			}
 
 		// Se carga toda la informacion de un proyecto dado su nombre
@@ -143,8 +126,7 @@
 			public static void cargarProyecto(String nombreProyecto)
 				{
 		
-					// Se recorre el ArrayList de proyectos declarado en la linea
-					// 46 para buscar el proyecto por el nombre
+					// Se recorre el ArrayList de proyectos para buscar el proyecto por el nombre
 
 						for(Proyecto proyecto : proyectos)
 							{
@@ -159,7 +141,8 @@
 											
 												proyectoActual = proyecto;
 
-											// Se buscan los archivos de participantes y actividades del proyecto
+											// Se buscan los archivos de participantes y actividades
+											// del proyecto
 
 												String rutaParticipantes = "./././data/Proyectos/" + proyectoActual.getNombre() + "/participantes.csv";
 												String rutaActividades = "./././data/Proyectos/" + proyectoActual.getNombre() + "/actividades.csv";
@@ -179,21 +162,21 @@
 
 				}
 		
-		// Se cargan y guardan todos los proyectos existentes en la aplicación en el 
-		// AraryList de Proyecto declarado en la linea 25, que vienen del archivo
+		// Se cargan y guardan todos los proyectos existentes en la aplicación
+		// en el AraryList de proyectos, que vienen del archivo
 		// data/proyectos.csv
 		
 			public static void cargarProyectos(String rutaArchivo)
 				{
 					
 					// Se crean variables necesarias para la carga del archivo
-					// data/proyectos.csv
 
 						BufferedReader lector;
 						String linea;
 						String partes[];
 			
-					// Se crea un try por si no se encuentra el archivo en la ruta
+					// Se crea un try por si no se encuentra el archivo en la
+					// ruta
 
 						try
 							{
@@ -203,16 +186,15 @@
 									lector = new BufferedReader(new FileReader(rutaArchivo));
 									lector.readLine();
 
-								// Se crea un ciclo para leer todas las lineas del archivo	
+								// Se crea un ciclo para leer todas las lineas
+								// del archivo	
 				
 									while ((linea = lector.readLine()) != (null))
 										{
 
-											// Se separa la información por los ";" que hay
-											// en la linea leida y se convierte en una lista.
-											// El elemento 0 es el nombre del proyecto,
-											// el 1 es su descripción, el 2 es su fecha incial,
-											// el 3 es su fecha final y el 4 es su iD
+											// Se separa la información por los
+											// ";" que hay en la linea leida y
+											// se convierte en una lista
 
 												
 												partes = linea.split(";");
@@ -221,15 +203,15 @@
 
 												Proyecto proyecto = new Proyecto(partes[0], partes[1], partes[2], partes[3], Integer.parseInt(partes[4]));
 											
-											// Se guarda el proyecto en el AraryList de Proyecto 
-											// declarado en la linea 25	
+											// Se guarda el proyecto en el AraryList
+											// de proyectos
 											
 												proyectos.add(proyecto);
 
 										}
 									
-									// Una vez finalizada la lectura del archivo, se limpian 
-									// las variables declaradas en las lineas 53, 54 y 55
+									// Una vez finalizada la lectura del archivo, se
+									// limpian las variables usadas
 									
 										lector.close();
 										linea = null;
@@ -241,29 +223,20 @@
 								}
 				}
 		
-		// Funcion para añadir un participante en el proyecto que se encuentre cargado
-		// en el momento
-
-			public static void crearParticipante(String nombre, String correo, boolean isDuenio)
-			{
-
-				Participante nuevoParticipante = new Participante(nombre, correo, isDuenio);
-			
-			}
-		
-		//Funcion para cargar el contador de IDs, el numero que se encuentre en data/iD.csv
+		// Funcion para cargar el contador de IDs, el numero que se encuentre en
+		// data/iDs/iDProyecto.csv
 		
 			public static void cargarIdProyecto(String rutaArchivo)
 			{
 
 					// Se crean variables necesarias para la carga del archivo
-					// data/proyectos.csv
 
 						BufferedReader lector;
 						String linea;
 						String partes[];
 			
-					// Se crea un try por si no se encuentra el archivo en la ruta
+					// Se crea un try por si no se encuentra el archivo en la
+					// ruta
 
 						try
 							{
@@ -273,14 +246,14 @@
 									lector = new BufferedReader(new FileReader(rutaArchivo));
 									linea = lector.readLine();
 
-								// Se guarda el iD en la variable declarada en la linea 20
+								// Se guarda el iD en la variable iDProyecto
 												
 									partes = linea.split("");
 									iDProyecto = Integer.parseInt(partes[0]);
 
 									
-								// Una vez finalizada la lectura del archivo, se limpian 
-								// las variables declaradas en las lineas 53, 54 y 55
+								// Una vez finalizada la lectura del archivo, 
+								// se limpian las variables usadas
 									
 									lector.close();
 									linea = null;
@@ -317,7 +290,7 @@
 
 						// Crea el archivo
 						
-							CsvWriter salidaCSV = new CsvWriter(new FileWriter(rutaArchivo, true), ',');
+							CsvWriter salidaCSV = new CsvWriter(new FileWriter(rutaArchivo, true), ';');
 						
 						// Escribe el nuevo iD en el archivo
 
@@ -334,19 +307,20 @@
 
 			}
 		
-		//Funcion para cargar el contador de IDs, el numero que se encuentre en data/iD.csv
+		// Funcion para cargar el contador de IDs, el numero que se encuentre en
+		// data/iDs/iDActividad.csv
 		
 			public static void cargarIdActividad(String rutaArchivo)
 			{
 
 					// Se crean variables necesarias para la carga del archivo
-					// data/proyectos.csv
 
 						BufferedReader lector;
 						String linea;
 						String partes[];
 			
-					// Se crea un try por si no se encuentra el archivo en la ruta
+					// Se crea un try por si no se encuentra el archivo en la
+					// ruta
 
 						try
 							{
@@ -356,14 +330,14 @@
 									lector = new BufferedReader(new FileReader(rutaArchivo));
 									linea = lector.readLine();
 
-								// Se guarda el iD en la variable declarada en la linea 20
+								// Se guarda el iD en la variable iDActvidad
 												
 									partes = linea.split("");
 									iDActividad = Integer.parseInt(partes[0]);
 
 									
-								// Una vez finalizada la lectura del archivo, se limpian 
-								// las variables declaradas en las lineas 53, 54 y 55
+								// Una vez finalizada la lectura del archivo,
+								// se limpian las variables usadas
 									
 									lector.close();
 									linea = null;
@@ -375,7 +349,7 @@
 								}
 				}
 
-		// Función para aumentar en 1 el iD guardado en data/iD.csv
+		// Función para aumentar en 1 el iD guardado en data/iDs/iDActividad.csv
 
 			public static void modificarIdActividad(String rutaArchivo) 
 			{
@@ -400,7 +374,7 @@
 
 						// Crea el archivo
 						
-							CsvWriter salidaCSV = new CsvWriter(new FileWriter(rutaArchivo, true), ',');
+							CsvWriter salidaCSV = new CsvWriter(new FileWriter(rutaArchivo, true), ';');
 						
 						// Escribe el nuevo iD en el archivo
 
@@ -417,15 +391,87 @@
 
 			}			
 
-		// Setter para la fecha final del proyecto que se esté manejando
-		// el el momentos
-		
-			public static void setFechaFinalProyectoActual(String fechaFinall)
-			{
+		// Actualiza los participantes del archivo de participantes del proyecto
+		// actual con la informacion del ArrayList de participantes
 
-				proyectoActual.setFechaFinal(fechaFinall);
+			public static void actualizarParticipantes(String rutaArchivo)
+				{
 
-			}
+					// Se extrae la lista del participantes del proyecto que se esté
+					// manejando actualmente	
+
+						ArrayList<Participante> participantes = Plataforma.getProyectoActual().getParticipantes();
+
+					// Actualiza el archivo de participantes con los nuevos elementos de la
+					// lista de participantes
+
+						// Verifica si existe el archivo
+
+						String salidaArchivo = Plataforma.getRutaParticipantes();
+						boolean existe = new File(salidaArchivo).exists();
+				
+						// Si existe un archivo llamado asi, lo borra
+
+							if(existe)
+							{
+								File archivoUsuarios = new File(salidaArchivo);
+								archivoUsuarios.delete();
+							}
+
+						// Se crea un try en caso de que la ruta no sea valida
+					
+							try 
+								{
+
+								// Crea el archivo
+								
+									CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
+								
+								// Se escribe la primera fila del archivo (los nombres de las columnas)
+
+									salidaCSV.write("nombre");
+									salidaCSV.write("correo");
+									salidaCSV.write("isDuenio");
+									salidaCSV.write("actividadesRealizadas");
+								
+								// Deja de escribir en el archivo
+
+									salidaCSV.endRecord();
+								
+								// Se recorre la lista de participantes y se inserta la informacion de cada uno en el archivo
+
+									for (Participante participanteSelec : participantes) 
+										{
+											
+											salidaCSV.write(participanteSelec.getNombre()); // Se escribe el nombre
+											salidaCSV.write(participanteSelec.getCorreo()); // Se escribe el correo
+											salidaCSV.write(Boolean.toString(participanteSelec.getIsDuenio())); // Se escribe si es dueño del proyecto
+											
+											String iDsActividades = ""; // Se crea un Strign para ir anexando los iDs de las actiidades realizadas por el ususrio separadas por un punto (.)
+
+											ArrayList<Actividad> actividadesRealizada = participanteSelec.getActividades(); // Se extrae el ArrayList de actividades de participante
+
+											// Se recorre el ArrayList de actividades del participante y se anexan los iDs de actividades a la variable iDsActividades
+
+												for (Actividad actividad : actividadesRealizada)
+													{
+														iDsActividades = iDsActividades + actividad.getId() + ".";
+													}
+											
+											salidaCSV.write(iDsActividades); // Se escriben en el archivo el Strign de iDs de actividades realizadas
+
+											salidaCSV.endRecord(); // Deja de escribir en el archivo
+							
+								}
+								
+									salidaCSV.close(); // Cierra el archivo
+
+								
+							} catch(IOException e) {
+								e.printStackTrace();
+							}  
+
+				}
 
 		// Funcion para poder leer informacion de la consola
 

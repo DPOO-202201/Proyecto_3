@@ -8,17 +8,15 @@
 	import java.io.IOException;
 	import java.util.ArrayList;
 	import javax.swing.JOptionPane;
-
 	import com.csvreader.CsvWriter;
-
-import procesamiento.Plataforma;
+	import procesamiento.Plataforma;
 
 // Clase principal	
 
 	public class Proyecto
 	{
 		
-		// Se crean los atributos de Proyecto
+		// Atributos
 
 			private String nombre;
 			private String descripcion;
@@ -29,22 +27,29 @@ import procesamiento.Plataforma;
 			private static ArrayList<Participante> participantes = new ArrayList<Participante>();
 			private static ArrayList<Actividad> actividades = new ArrayList<Actividad>();
 
-		// Se crea el contructor para Proyecto	
+		// Constructor	
 		
-			public Proyecto(String nombre, String descripcion, String fechaInicial, String fechaFinal, int iD)
-			{
+			public Proyecto
+				(
+					String nombre,
+					String descripcion,
+					String fechaInicial,
+					String fechaFinal,
+					int iD
+				)
+					{
 
-				this.nombre = nombre;
-				this.descripcion = descripcion;
-				this.fechaInicial = fechaInicial;
-				this.iD = iD;
-				tiposActividades = new ArrayList<String>();
-				participantes = new ArrayList<Participante>();
-				
-			}
+						this.nombre = nombre;
+						this.descripcion = descripcion;
+						this.fechaInicial = fechaInicial;
+						this.iD = iD;
+						tiposActividades = new ArrayList<String>();
+						participantes = new ArrayList<Participante>();
+						
+					}
 
-		// Función para crear la carpeta y los archivos del proyecto 
-		// en la carpeta data
+		// Función para crear la carpeta y los archivos del proyecto en la carpeta
+		// data/Proyectos
 
 			public static void crearArchivoProyecto(String nombreProyecto) throws IOException 
 			{
@@ -61,32 +66,32 @@ import procesamiento.Plataforma;
 					File actividades = new File(actividadesUbicacion);
 					actividades.createNewFile();
 
-					// Crea el encabezado de las columnas del proyecto	
+				// Crea el encabezado de las columnas del proyecto	
 
-						// Verfica que el archivo ya exista
+					// Verfica que el archivo ya exista
 
-							String salidaArchivo = actividadesUbicacion;
-							boolean existe = new File(salidaArchivo).exists(); 
-						
-						// Si ya existe el archivo, lo borra
+						String salidaArchivo = actividadesUbicacion;
+						boolean existe = new File(salidaArchivo).exists(); 
+					
+					// Si ya existe el archivo, lo borra
 
-							if(existe)
-								{
+						if(existe)
+							{
 
-									File archivoUsuarios = new File(salidaArchivo);
-									archivoUsuarios.delete();
-								
-								}
+								File archivoUsuarios = new File(salidaArchivo);
+								archivoUsuarios.delete();
+							
+							}
 
-						// Se crea un try por si la ruta del archivo no es valida
-						
-							try {
+					// Se crea un try por si la ruta del archivo no es valida
+					
+						try 
+							{
 
-								// Crea el archivo
-
-									CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ',');
-								
-								// Datos para identificar las columnas
+								CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';'); // Crea el archivo
+							
+								// Escribe la primera fila del archivo con el nombre de
+								// las columnas
 
 									salidaCSV.write("titulo");
 									salidaCSV.write("descripcion");
@@ -99,18 +104,14 @@ import procesamiento.Plataforma;
 									salidaCSV.write("isTiempoReal");
 									salidaCSV.write("autor");
 									salidaCSV.write("iD");
-
-								// Deja de escribir en el archivo
 								
-									salidaCSV.endRecord();
+								salidaCSV.endRecord(); // Deja de escribir en el archivo
 								
-								// Cierra el archivo
-
-									salidaCSV.close(); 
-								
+								salidaCSV.close(); // Cierra el archivo
+							
 							} catch(IOException e) {
-								e.printStackTrace();
-							}   
+							e.printStackTrace();
+						}   
 
 				// Crea el archivo de participantes del proyecto
 
@@ -137,108 +138,95 @@ import procesamiento.Plataforma;
 
 						// Se crea un try por si la ruta del archivo no es valida
 					
-							try {
+							try 
+								{
 
-								// Crea el archivo
+									// Crea el archivo
 
-									CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ',');
+										CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ',');
+									
+									// Datos para identificar las columnas
+
+										salidaCSV.write("nombre");
+										salidaCSV.write("correo");
+										salidaCSV.write("isDuenio");
+										salidaCSV.write("actividadesRealizadas");
+									
+									salidaCSV.endRecord(); // Deja de escribir en el archivo
+
+									salidaCSV.close(); // Cierra el archivo
 								
-								// Datos para identificar las columnas
-
-									salidaCSV.write("nombre");
-									salidaCSV.write("correo");
-									salidaCSV.write("isDuenio");
-									salidaCSV.write("actividadesRealizadas");
-
-								// Deja de escribir en el archivo
-								
-									salidaCSV.endRecord();
-								
-								// Cierra el archivo
-
-									salidaCSV.close(); 
-								
-							} catch(IOException e) {
+								} catch(IOException e) {
 								e.printStackTrace();
 							}
-
-
-				
+	
 			}
-		
-		// Setter para la fecha final del proyecto
-		
-		public static void setFechaFinal(String fechaFinall)
-		{
-
-			fechaFinal = fechaFinall;
-
-		}
 		
 		// Getter para los participantes del proyecto	
 		
 			public static ArrayList<Participante> getParticipantes()
-			{
+				{
+					return participantes;
+				}			
 
-				return participantes;
-
-			}			
-
-		// Getter para el nombre del proyecto
+		// Getter para el atributo nombre
 
 			public String getNombre()
-			{
+				{
+					return nombre;
+				}
 
-				return nombre;
-			
-			}
-
-		// Getter para el iD del proyecto
+		// Getter para el atributo iD
 		
 			public int getId()
 			{
-
 				return iD;
-		
 			}
 
-		// Getter para el iD del proyecto
+		// Getter para el atributo descripcion
 		
 			public String getDescripcion()
-			{
+				{
+					return descripcion;
+				}
 
-				return descripcion;
-		
-			}
-
-		// Getter para el iD del proyecto
+		// Getter para el atributo fechaInicial
 		
 			public String getFechaInicial()
 				{
-
 					return fechaInicial;
-			
 				}
 
-		// Getter para el iD del proyecto
+		// Getter para el atributo fechaFinal
 		
 			public String getFechaFinal()
 				{
-
 					return fechaFinal;
-			
 				}
 
-		// Getter para el iD del proyecto
+		// Getter para el atributo actividades
 		
-		public ArrayList<Actividad> getActividades()
-		{
+			public ArrayList<Actividad> getActividades()
+			{
+				return actividades;
+			}
 
-			return actividades;
-	
-		}
+		// Getter para el atributo tiposActividad
+
+			public static ArrayList<String> getTiposActividad()
+			{
+				return tiposActividades;
+			}
 		
-		// Funcion para cargar los participantes del proyecto
+		// Setter para la fecha final del proyecto
+		
+			public static void setFechaFinal(String fechaFinall)
+			{
+				fechaFinal = fechaFinall;
+			}
+		
+		// Metodo para cargar los participantes del proyecto en el atributo
+		// participantes
 
 			public static void cargarParticipantes(String rutaArchivo)
 			{
@@ -259,13 +247,15 @@ import procesamiento.Plataforma;
 							
 								lector = new BufferedReader(new FileReader(rutaArchivo));
 							
-							// Se lee la primera linea del archivo que nombra las columnas	
+							// Se lee la primera linea del archivo que nombra
+							// las columnas	
 							
 								lector.readLine();
 
-							// Se while para recorrer todas las lineas del archivo
+							// Se while para recorrer todas las lineas del
+							// archivo
 
-								while ((linea = lector.readLine()) != null)
+								while (((linea = lector.readLine()) != null) && (linea != ""))
 									{
 
 										// Se dividen las columnas de la linea leida
@@ -277,7 +267,7 @@ import procesamiento.Plataforma;
 
 											boolean isDuenio;
 
-											if(partes[2] == "True")
+											if(partes[2] == "true")
 												{
 													isDuenio = true;
 												}
@@ -286,19 +276,19 @@ import procesamiento.Plataforma;
 													isDuenio = false;
 												}
 
-										// Se obtiene el ArrayList de participantes del proyecto que se
-										// esté trabajando
+										// Se obtiene el ArrayList de participantes del proyecto
+										// que se esté trabajando
 										
 											ArrayList<Participante> participantes = Plataforma.getProyectoActual().getParticipantes();
 										
-										// Se crea el nuevo particiante con la información leida en la linea
+										// Se crea el nuevo particiante con la información leida
+										// en la linea
 
 											Participante participante = new Participante(partes[0], partes[1], isDuenio);
 										
-										// Se añade el participante creado al ArrayList de participantes
-										// del proyecto
+										// Se añade el participante creado al ArrayList de
+										// participantes del proyecto
 
-											
 											participantes.add(participante);
 
 									}
@@ -316,7 +306,7 @@ import procesamiento.Plataforma;
 
 			}
 
-		// Funcion para cargar las actividades del proyecto
+		// Metodo para cargar las actividades del proyecto
 
 			public static void cargarActividades(String rutaArchivo)
 			{
@@ -342,11 +332,13 @@ import procesamiento.Plataforma;
 
 								lector.readLine();
 
-							// Se crea un while para leer todas las lineas del archivo
+							// Se crea un while para leer todas las lineas del
+							// archivo
 
-								while ((linea = lector.readLine()) != null)
+								while (((linea = lector.readLine()) != null) && (linea != ""))
 									{
-										// Se dividen las columnas de la linea leida
+										// Se dividen las columnas de la linea
+										// leida
 
 											partes = linea.split(";");
 									
@@ -354,34 +346,42 @@ import procesamiento.Plataforma;
 
 											String autor = partes[9];
 
-										// Se llama al ArrayList de participantes del proyecto
-										// que se esté manejando	
+										// Se llama al ArrayList de participantes
+										// del proyecto que se esté manejando	
 										
 											ArrayList<Participante> participantes = Plataforma.getProyectoActual().getParticipantes();
 
-										// Se crea un for para buscar en el ArrayList de participantes
-										// al participante autor de la actividad de la linea leida
+										// Se crea un for para buscar en el
+										// ArrayList de participantes al
+										// participante autor de la actividad de
+										// la linea leida
 
 											for (Participante participante : participantes) 
 												{ 
 
-													// Si se encuentra el participante
+													// Si se encuentra el
+													// participante
 
 														if (participante.getNombre().equals(autor))
 															{
 
-																// Se crea la nueva actividad con la información
-																// leida en la linea
+																// Se crea la nueva
+																// actividad con la
+																// información leida
+																// en la linea
 
 																	Actividad actividad = new Actividad(partes[0], partes[1], partes[2], partes[3], partes[4], partes[5], partes[6], Long.parseLong(partes[7]), Boolean.parseBoolean(partes[8]), participante, Integer.parseInt(partes[10]));
 																
-																// Se extrae el ArrayList de actividades del
+																// Se extrae el ArrayList
+																// de actividades del
 																// participante encontrado
 
 																	ArrayList<Actividad> actividades = participante.getActividades();
 																
-																// Se añade la nueva actividad creada al 
-																// ArrayList de actividades del participante	
+																// Se añade la nueva
+																// actividad creada al 
+																// ArrayList de actividades
+																// del participante	
 
 																	actividades.add(actividad);
 																	Plataforma.getProyectoActual().getActividades().add(actividad);
@@ -400,20 +400,18 @@ import procesamiento.Plataforma;
 
 						} catch (Exception e)
 							{
-
 								JOptionPane.showMessageDialog(null, e);
-							
 							}
 
 			}
 
-		// Funcion para crear un nuevo proyecto
+		// Metodo para crear un nuevo proyecto
 		
 			public static void crearProyecto(String nombre, String descripcion, String fechaInicial, String fechaFinal, int iD) throws IOException
 				{
 
-					// Se obtiene el iD para el proyecto y se crea y guarda un nuevo
-					// iD para algún nuevo proyecto más adelante
+					// Se obtiene el iD para el proyecto y se crea y guarda
+					// un nuevo iD para algún nuevo proyecto más adelante
 					
 						iD = Plataforma.getIdProyecto();
 						Plataforma.modificarIdProyecto(Plataforma.getRutaIdProyectos());
@@ -433,7 +431,8 @@ import procesamiento.Plataforma;
 
 					// Se añade el proyecto al csv de proyectos	
 
-						// Se obtiene la ruta donde de se encuentra el csv de proyectos
+						// Se obtiene la ruta donde de se encuentra el csv de
+						// proyectos
 
 							String salidaArchivo = Plataforma.getRutaProyectos();
 
@@ -456,48 +455,48 @@ import procesamiento.Plataforma;
 							try 
 								{
 								
-								// Crea el archivo
-								
-									CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ',');
-								
-								// Datos para identificar las columnas
+									// Crea el archivo
+									
+										CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ',');
+									
+									// Datos para identificar las columnas
 
-									salidaCSV.write("nombre");
-									salidaCSV.write("descripcion");
-									salidaCSV.write("fechaInicial");
-									salidaCSV.write("fechaFinal");
-									salidaCSV.write("iD");
+										salidaCSV.write("nombre");
+										salidaCSV.write("descripcion");
+										salidaCSV.write("fechaInicial");
+										salidaCSV.write("fechaFinal");
+										salidaCSV.write("iD");
 
-								// Deja de escribir en el archivo
+									// Deja de escribir en el archivo
 
-									salidaCSV.endRecord();
+										salidaCSV.endRecord();
+									
+									// Recorremos la lista y lo insertamos en el archivo
+									
+										for(Proyecto proyectoSelec : Plataforma.getProyectos()) 
+										{
+
+											salidaCSV.write(proyectoSelec.getNombre());
+											salidaCSV.write(proyectoSelec.getDescripcion());
+											salidaCSV.write(proyectoSelec.getFechaInicial());
+											salidaCSV.write(proyectoSelec.getFechaFinal());
+											salidaCSV.write(Integer.toString(proyectoSelec.getId()));
+
+											salidaCSV.endRecord(); // Deja de escribir en el archivo
+										
+										}
+									
+									salidaCSV.close(); // Cierra el archivo
 								
-								// Recorremos la lista y lo insertamos en el archivo
-								
-									for(Proyecto proyectoSelec : Plataforma.getProyectos()) 
+								} 
+								catch(IOException e) 
 									{
-
-										salidaCSV.write(proyectoSelec.getNombre());
-										salidaCSV.write(proyectoSelec.getDescripcion());
-										salidaCSV.write(proyectoSelec.getFechaInicial());
-										salidaCSV.write(proyectoSelec.getFechaFinal());
-										salidaCSV.write(Integer.toString(proyectoSelec.getId()));
-									
-										// Deja de escribir en el archivo
-
-											salidaCSV.endRecord(); 
-									
+										e.printStackTrace();
 									}
-								
-								salidaCSV.close(); // Cierra el archivo
-								
-							} catch(IOException e) {
-								e.printStackTrace();
-							}
 
 				}
 			
-		// Función para agregar un participante al proyecto
+		// Metodo para agregar un participante al proyecto
 
 			public static void anadirParticiante(String nombre, String correo, boolean isDuenio)
 				{
@@ -506,12 +505,13 @@ import procesamiento.Plataforma;
 
 						Participante participante = new Participante(nombre, correo, isDuenio);
 
-					// Se extrae la lista del participantes del proyecto que se esté
-					// manejando actualmente	
+					// Se extrae la lista del participantes del proyecto que
+					// se esté manejando actualmente	
 
 						ArrayList<Participante> participantes = Plataforma.getProyectoActual().getParticipantes();
 					
-					// Se añade el nuevo participante creado a la lista de participantes
+					// Se añade el nuevo participante creado a la lista de 
+					// participantes
 
 						participantes.add(participante);
 
@@ -527,8 +527,10 @@ import procesamiento.Plataforma;
 
 						if(existe)
 						{
+
 							File archivoUsuarios = new File(salidaArchivo);
 							archivoUsuarios.delete();
+
 						}
 
 						// Se crea un try en caso de que la ruta no sea valida
@@ -536,78 +538,61 @@ import procesamiento.Plataforma;
 						try 
 							{
 
-							// Crea el archivo
-								CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ',');
-							
-							// Datos para identificar las columnas
+								// Crea el archivo
+								
+									CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
+								
+								// Datos para identificar las columnas
 
-								salidaCSV.write("nombre");
-								salidaCSV.write("correo");
-								salidaCSV.write("isDuenio");
-								salidaCSV.write("actividadesRealizadas");
-							
-							// Deja de escribir en el archivo
+									salidaCSV.write("nombre");
+									salidaCSV.write("correo");
+									salidaCSV.write("isDuenio");
+									salidaCSV.write("actividadesRealizadas");
+								
+								// Deja de escribir en el archivo
 
-								salidaCSV.endRecord();
-							
-							// Se recorre la lista y se inserta la informacion en el archivo
+									salidaCSV.endRecord();
+								
+								// Se recorre la lista y se inserta la informacion en el archivo
 
-							for (Participante participanteSelec : participantes) 
-								{
-									
-									salidaCSV.write(participanteSelec.getNombre());
-									salidaCSV.write(participanteSelec.getCorreo());
-									salidaCSV.write(Boolean.toString(participanteSelec.getIsDuenio()));
-									String iDsActividades = "";
-
-									ArrayList<Actividad> actividadesRealizada = participanteSelec.getActividades();
-
-									for (Actividad actividad : actividadesRealizada)
+									for (Participante participanteSelec : participantes) 
 										{
+											
+											salidaCSV.write(participanteSelec.getNombre());
+											salidaCSV.write(participanteSelec.getCorreo());
+											salidaCSV.write(Boolean.toString(participanteSelec.getIsDuenio()));
+											String iDsActividades = "";
 
-											iDsActividades = iDsActividades + actividad.getId() + ".";
+											ArrayList<Actividad> actividadesRealizada = participanteSelec.getActividades();
 
+											for (Actividad actividad : actividadesRealizada)
+												{
+
+													iDsActividades = iDsActividades + actividad.getId() + ".";
+													System.out.println(iDsActividades);
+
+												}
+
+											salidaCSV.write(iDsActividades);
+										
+											// Deja de escribir en el archivo
+
+												salidaCSV.endRecord();
+							
 										}
 
-									salidaCSV.write(iDsActividades);
-								
-									// Deja de escribir en el archivo
+									salidaCSV.close(); // Cierra el archivo
 
-										salidaCSV.endRecord();
-						
-							}
 							
-							salidaCSV.close(); // Cierra el archivo
-							
-						} catch(IOException e) {
-							e.printStackTrace();
-						}   
+							} 
+							catch(IOException e) 
+								{
+									e.printStackTrace();
+								}   
 
 				}
-
-		// Getter para el ArrayList de tipos de actividades del proyecto
-
-			public static ArrayList<String> getTiposActividad()
-				{
-
-					return tiposActividades;
-
-				}
-
-		// Función para añadir un nuevo tipo de actividad al proyecto
-
-			public static void anadirTipoActividad(String tipoActividad)
-				{
-					
-					// Consigue el proyecto que se esté manejando actualmente,
-					// extrae el ArrayList donde se encuentran los tipos de actividad 
-					// y le añade el tipo de actividad recibido en la funcion
-
-						Plataforma.getProyectoActual().getTiposActividad().add(tipoActividad);
-
-				}
-				
-		// Función para añadir una nueva actividad al proyecto
+		
+		// Metodo para añadir una nueva actividad al proyecto
 		
 			public static void anadirActividad(String titulo, String descripcion, String tipo, String fechaInicial, String fechaFinal, String horaInicial, String horaFinal, String tiempoRealizacion, String isTiempoReal, String autor)
 					{
@@ -627,7 +612,8 @@ import procesamiento.Plataforma;
 												// informacion recibida en la funcion
 												
 													participante.getActividades().add(new Actividad(titulo, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal, Long.parseLong(tiempoRealizacion), Boolean.parseBoolean(isTiempoReal), participante, Plataforma.getIdActividad()));
-													Plataforma.getProyectoActual().getActividades().add(new Actividad(titulo, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal, Long.parseLong(tiempoRealizacion), Boolean.parseBoolean(isTiempoReal), participante, Plataforma.getIdActividad()));
+													int iD = Plataforma.getIdActividad();
+													Plataforma.getProyectoActual().getActividades().add(new Actividad(titulo, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal, Long.parseLong(tiempoRealizacion), Boolean.parseBoolean(isTiempoReal), participante, iD));
 													
 												// Se aumenta en 1 el iD de actividades y se carga de nuevo en 
 												// la variable iDActividad
@@ -659,17 +645,17 @@ import procesamiento.Plataforma;
 								CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
 								
 								// Datos para identificar las columnas
-								salidaCSV.write("titulo");
-								salidaCSV.write("descripcion");
-								salidaCSV.write("tipo");
-								salidaCSV.write("fechaInicial");
-								salidaCSV.write("fechaFinal");
-								salidaCSV.write("horaInicial");
-								salidaCSV.write("horaFinal");
-								salidaCSV.write("tiempoRealizacion");
-								salidaCSV.write("isTiempoReal");
-								salidaCSV.write("autor");
-								salidaCSV.write("iD");
+									salidaCSV.write("titulo");
+									salidaCSV.write("descripcion");
+									salidaCSV.write("tipo");
+									salidaCSV.write("fechaInicial");
+									salidaCSV.write("fechaFinal");
+									salidaCSV.write("horaInicial");
+									salidaCSV.write("horaFinal");
+									salidaCSV.write("tiempoRealizacion");
+									salidaCSV.write("isTiempoReal");
+									salidaCSV.write("autor");
+									salidaCSV.write("iD");
 								
 								salidaCSV.endRecord(); // Deja de escribir en el archivo
 								
@@ -690,12 +676,26 @@ import procesamiento.Plataforma;
 								}
 								
 								salidaCSV.close(); // Cierra el archivo
+
+								Plataforma.actualizarParticipantes(Plataforma.getRutaParticipantes());
 								
 							} catch(IOException e) {
 								e.printStackTrace();
 							}   
 
 					}
-				
 	
+		// Metodo para añadir un nuevo tipo de actividad al proyecto
+
+			public static void anadirTipoActividad(String tipoActividad)
+				{
+					
+					// Consigue el proyecto que se esté manejando actualmente,
+					// extrae el ArrayList donde se encuentran los tipos de actividad 
+					// y le añade el tipo de actividad recibido en la funcion
+
+						Plataforma.getProyectoActual().getTiposActividad().add(tipoActividad);
+
+				}
+
 	}
