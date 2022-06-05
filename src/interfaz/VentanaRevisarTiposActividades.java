@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -19,6 +20,7 @@ public class VentanaRevisarTiposActividades extends JFrame implements ActionList
 	private JLabel lblTitulo;
 	private JPanel pTipos,pBotones;
 	private JButton btnModificar, btnCrear;
+	private JList lstTiposActividad;
 	
 	public VentanaRevisarTiposActividades() {
 		setTitle("Tipos de actividades");
@@ -34,13 +36,14 @@ public class VentanaRevisarTiposActividades extends JFrame implements ActionList
 		add(pTipos,BorderLayout.WEST);
 		
 		pBotones = new JPanel(); //nuevo panel para los botones
-		pBotones.setLayout(new GridLayout(2,0));
+		pBotones.setLayout(new GridLayout(1,1));
 		
+		/*
 		btnModificar = new JButton("Modificar tipos de actividad"); //Boton para modificar tipos, con comanti y listener
 		btnModificar.addActionListener(this); //listener
 		btnModificar.setActionCommand("MODIFICAR"); //comando
 		pBotones.add(btnModificar); //anaidir a panel botones
-		
+		*/
 		btnCrear = new JButton("Crear tipo de actividad"); //boton para crear tipos, funciona igual que el anterior
 		btnCrear.addActionListener(this);
 		btnModificar.setActionCommand("CREAR");
@@ -58,7 +61,8 @@ public class VentanaRevisarTiposActividades extends JFrame implements ActionList
         }
         else if(comando.equals( "CREAR" )) //Si el usuario quiere crear un nuevo tipo de actividad
         {
-            
+        	String nuevoTipoActividad = JOptionPane.showInputDialog(null, "Digite la nueva actividad que quiere crear.", "Crear tipo de actividad", 3);
+        	//TODO Funcion para crear la nueva actividad
         }        
     }
 }

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -82,18 +83,32 @@ public class VentanaCrearProyecto extends JFrame implements ActionListener
 		panelBotones.setLayout(new GridLayout(1,2));
 		
 		btnCancelar = new JButton("Cancelar");
-		btnConfirmar = new JButton("Crear");
+		btnCancelar.setActionCommand("CANCELAR");
 		panelBotones.add(btnCancelar);
+		
+		btnConfirmar = new JButton("Crear");
+		btnConfirmar.setActionCommand("CREAR");
 		panelBotones.add(btnConfirmar);
 		
-		add(panelBotones);		
+		add(panelBotones);	
 		
 		
 	}
 	
-	//TODO completar para dar acciones a los botones
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
+		
+		if(comando.equals("CREAR")) {
+			JOptionPane.showMessageDialog(null, "Registrado exitosamente", "Guardar cambios", 1);
+			JOptionPane.showMessageDialog(null, "No se pudo registrar", "Guardar cambios", 0);
+		}
+		
+		if (comando.equals("CANCELAR")) {
+			cerrarVentana(); //TODO Programar para que cierre esa ventana
+		}
 	}
 		
+	public void cerrarVentana() {
+		dispose();
+	}
 }

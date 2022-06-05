@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -108,7 +109,7 @@ public class VentanaAdministrarProyecto extends JFrame implements ActionListener
 			String comando = e.getActionCommand();
 			
 			if(comando.equals("GUARDAR")) { //si el usuario quiere guardar
-				
+				JOptionPane.showMessageDialog(null, "Datos guardados", "Guardar cambios", 1);
 			}
 			
 			if(comando.equals("PARTICIPANTES")) { //si el usuario quiere ver los datos de los participantes
@@ -124,7 +125,9 @@ public class VentanaAdministrarProyecto extends JFrame implements ActionListener
 			}
 			
 			if(comando.equals("REPORTE")) { //si el usuario quiere generar un reporte
-				
+				//TODO try catch con la logica
+				JOptionPane.showMessageDialog(null, "Reporte generado", "Reporte", 1);
+				JOptionPane.showMessageDialog(null, "No se pudo generar reporte", "Reporte", 0);				
 			}
 	}
 

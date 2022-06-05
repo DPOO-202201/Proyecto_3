@@ -112,7 +112,7 @@ public class VentanaAdministrarActividades extends JFrame implements ActionListe
 			}
 
 			if(comando.equals("CRONOMETRAR")) {
-	
+				new VentanaCronometrarActividad().setVisible(true);
 			}
 	 }
 }

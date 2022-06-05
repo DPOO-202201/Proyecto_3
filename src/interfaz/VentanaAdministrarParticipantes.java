@@ -89,7 +89,7 @@ public class VentanaAdministrarParticipantes extends JFrame implements ActionLis
 		}
 		
 		else if(comando.equals("REGISTRAR")) {
-			
+			new VentanaAniadirParticipantes().setVisible(true);
 		}
 	}
 }
