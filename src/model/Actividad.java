@@ -90,6 +90,20 @@ public class Actividad
 					return fechaFinal;
 				}
 
+		// Getter para el atributo horaInicial
+
+			public String getHoraInicial()
+				{
+					return horaInicial;
+				}
+
+		// Getter para el atributo horaFinal
+
+			public String getHoraFinal()
+				{
+					return horaFinal;
+				}
+
 		// Getter para el atributo tiempoRealizacion
 
 			public long getTiempoRelizacion()

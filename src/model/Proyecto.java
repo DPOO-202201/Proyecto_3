@@ -597,91 +597,130 @@
 			public static void anadirActividad(String titulo, String descripcion, String tipo, String fechaInicial, String fechaFinal, String horaInicial, String horaFinal, String tiempoRealizacion, String isTiempoReal, String autor)
 					{
 
+						// Se crea una variable para saber si existe un participante con el nombre del
+						// autor ingresado para esta nueva actividad
+
+						boolean existeParticipante = false;
+
 						// Se crea un for para recorrer todo el ArrayList de paticipates del proycto actual
-						for (Participante participante : Plataforma.getProyectoActual().getParticipantes())
+
+							for (Participante participante : Plataforma.getProyectoActual().getParticipantes())
+									{
+
+										// Si el participante seleccionado en el momento tiene el mismo nombre del
+										// autor de la actividad
+
+											if (participante.getNombre().equals(autor))
+												{
+
+													existeParticipante = true;
+													
+													// Se obtiene el ArrayList de activisdades del participante
+													// seleccionado y se le añade la nueva activiad con la
+													// informacion recibida en la funcion
+													
+														participante.getActividades().add(new Actividad(titulo, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal, Long.parseLong(tiempoRealizacion), Boolean.parseBoolean(isTiempoReal), participante, Plataforma.getIdActividad()));
+														int iD = Plataforma.getIdActividad();
+														Plataforma.getProyectoActual().getActividades().add(new Actividad(titulo, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal, Long.parseLong(tiempoRealizacion), Boolean.parseBoolean(isTiempoReal), participante, iD));
+														
+													// Se aumenta en 1 el iD de actividades y se carga de nuevo en 
+													// la variable iDActividad
+
+														Plataforma.modificarIdActividad(Plataforma.getRutaIdActividades());
+														Plataforma.cargarIdActividad(Plataforma.getRutaIdActividades());
+
+													// Se rompe el recorrido para que no siga buscando el participante
+
+														break;
+
+												}
+
+									}
+
+						// Si se encuentra un participante con el nombre del autor ingresado			
+
+							if (existeParticipante)
 								{
 
-									// Si el participante seleccionado en el momento tiene el mismo nombre del
-									// autor de la actividad
+									// Se añaden todas las actividades al archivo de actividades
 
-										if (participante.getNombre().equals(autor))
+										String salidaArchivo = Plataforma.getRutaActividades();
+										boolean existe = new File(salidaArchivo).exists(); // Verifica si existe
+									
+									// Si existe un archivo llamado asi lo borra
+
+										if(existe) 
+										{
+
+											File archivoUsuarios = new File(salidaArchivo);
+											archivoUsuarios.delete();
+
+										}
+									
+									try 
+									{
+
+										// Crea el archivo
+											
+											CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
+										
+										// Datos para identificar las columnas
+
+											salidaCSV.write("titulo");
+											salidaCSV.write("descripcion");
+											salidaCSV.write("tipo");
+											salidaCSV.write("fechaInicial");
+											salidaCSV.write("fechaFinal");
+											salidaCSV.write("horaInicial");
+											salidaCSV.write("horaFinal");
+											salidaCSV.write("tiempoRealizacion");
+											salidaCSV.write("isTiempoReal");
+											salidaCSV.write("autor");
+											salidaCSV.write("iD");
+										
+										salidaCSV.endRecord(); // Deja de escribir en el archivo
+										
+										// Recorremos la lista y lo insertamos en el archivo
+										for(Actividad actividad : Plataforma.getProyectoActual().getActividades())
 											{
 												
-												// Se obtiene el ArrayList de activisdades del participante
-												// seleccionado y se le añade la nueva activiad con la
-												// informacion recibida en la funcion
+												salidaCSV.write(actividad.getTitulo());
+												salidaCSV.write(actividad.getDescripcion());
+												salidaCSV.write(actividad.getTipo());
+												salidaCSV.write(actividad.getFechaFinal());
+												salidaCSV.write(actividad.getFechaFinal());
+												salidaCSV.write(actividad.getHoraInicial());
+												salidaCSV.write(actividad.getHoraFinal());
+												salidaCSV.write(Long.toString(actividad.getTiempoRelizacion()));
+												salidaCSV.write(Boolean.toString(actividad.getIsTiempoReal()));
+												salidaCSV.write(actividad.getAutor().getNombre());
+												salidaCSV.write(Integer.toString(actividad.getId()));
+
 												
-													participante.getActividades().add(new Actividad(titulo, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal, Long.parseLong(tiempoRealizacion), Boolean.parseBoolean(isTiempoReal), participante, Plataforma.getIdActividad()));
-													int iD = Plataforma.getIdActividad();
-													Plataforma.getProyectoActual().getActividades().add(new Actividad(titulo, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal, Long.parseLong(tiempoRealizacion), Boolean.parseBoolean(isTiempoReal), participante, iD));
-													
-												// Se aumenta en 1 el iD de actividades y se carga de nuevo en 
-												// la variable iDActividad
-
-													Plataforma.modificarIdActividad(Plataforma.getRutaIdActividades());
-													Plataforma.cargarIdActividad(Plataforma.getRutaIdActividades());
-
-												// Se rompe el recorrido para que no siga buscando el participante
-
-													break;
+												salidaCSV.endRecord(); // Deja de escribir en el archivo
 
 											}
+										
+										salidaCSV.close(); // Cierra el archivo
+
+										Plataforma.actualizarParticipantes(Plataforma.getRutaParticipantes());
+										
+									} 
+									catch(IOException e) 
+										{
+											e.printStackTrace();
+										}
+
+								} 
+	
+						// Si no se encuentra un participante con el nombre del autor ingresado
+						
+							else
+								{
+
+									System.out.println("\nNo se ha encontrado un participante con el nombre de autor ingresado.");
 
 								}
-
-						// Se añaden todas las actividades al archivo de actividades
-
-							String salidaArchivo = Plataforma.getRutaActividades();
-							boolean existe = new File(salidaArchivo).exists(); // Verifica si existe
-							
-							// Si existe un archivo llamado asi lo borra
-							if(existe) {
-								File archivoUsuarios = new File(salidaArchivo);
-								archivoUsuarios.delete();
-							}
-							
-							try {
-								// Crea el archivo
-								CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
-								
-								// Datos para identificar las columnas
-									salidaCSV.write("titulo");
-									salidaCSV.write("descripcion");
-									salidaCSV.write("tipo");
-									salidaCSV.write("fechaInicial");
-									salidaCSV.write("fechaFinal");
-									salidaCSV.write("horaInicial");
-									salidaCSV.write("horaFinal");
-									salidaCSV.write("tiempoRealizacion");
-									salidaCSV.write("isTiempoReal");
-									salidaCSV.write("autor");
-									salidaCSV.write("iD");
-								
-								salidaCSV.endRecord(); // Deja de escribir en el archivo
-								
-								// Recorremos la lista y lo insertamos en el archivo
-								for(Actividad actividad : Plataforma.getProyectoActual().getActividades()) {
-									salidaCSV.write(actividad.getTitulo());
-									salidaCSV.write(actividad.getDescripcion());
-									salidaCSV.write(actividad.getTipo());
-									salidaCSV.write(actividad.getFechaFinal());
-									salidaCSV.write(actividad.getFechaFinal());
-									salidaCSV.write(Long.toString(actividad.getTiempoRelizacion()));
-									salidaCSV.write(Boolean.toString(actividad.getIsTiempoReal()));
-									salidaCSV.write(actividad.getAutor().getNombre());
-									salidaCSV.write(Integer.toString(actividad.getId()));
-
-									
-									salidaCSV.endRecord(); // Deja de escribir en el archivo
-								}
-								
-								salidaCSV.close(); // Cierra el archivo
-
-								Plataforma.actualizarParticipantes(Plataforma.getRutaParticipantes());
-								
-							} catch(IOException e) {
-								e.printStackTrace();
-							}   
 
 					}
 	
