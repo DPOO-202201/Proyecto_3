@@ -87,7 +87,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 				}
 				catch (Exception e1) { //Si cancela el procedimiento
 					ingresando = false;
-					JOptionPane.showMessageDialog(null,"Ha cancelado la carga del proyecto");
+					JOptionPane.showMessageDialog(null,"Se ha cancelado la carga del proyecto");
 				}
 			}			
 		}		
