@@ -14,21 +14,21 @@ import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class VentanaCronometrarActividad extends JFrame implements ActionListener{
-	 private JLabel lblTitulo,lblAutor,lblActividad,lblDescripcion,lblTipoActividad,lblFecha,lblHora;
-	 private JTextField tfDescripcion, tfTipoActividad, tfFecha, tfHora;
+	 private JLabel lblTitulo,lblAutor,lblActividad,lblDescripcion,lblTipoActividad,lblFecha,lblTiempo;
+	 private JTextField tfDescripcion, tfTipoActividad, tfFecha, tfTiempo;
 	 private JButton btnGuardar,btnRegistrar,btnCronometrar;
 	 private JComboBox<String> cbAutor,cbActividad;
-	 private JPanel pAutor, pActividad, pDescripcion, pTipoActividad, pFecha, pHora, pBotones;
+	 private JPanel pAutor, pActividad, pDescripcion, pTipoActividad, pFecha, pTiempo, pBotones;
 	 
 	 public VentanaCronometrarActividad() {
-		 setTitle("Administrar actividades");
+		 setTitle("Cronometrar actividad");
 		 setSize(500,800);
 		 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		 setLocationRelativeTo(null);
 		 
 		 setLayout(new GridLayout(9,1));
 		 
-		 lblTitulo = new JLabel("Administrar actividades", SwingConstants.CENTER);
+		 lblTitulo = new JLabel("Cronometrar actividad", SwingConstants.CENTER);
 		 add(lblTitulo);
 		 
 		 pAutor = new JPanel();
@@ -73,13 +73,13 @@ public class VentanaCronometrarActividad extends JFrame implements ActionListene
 		 pFecha.add(tfFecha);
 		 add(pFecha);
 		 
-		 pHora = new JPanel();
-		 pHora.setLayout(new GridLayout(1,1));
-		 lblHora = new JLabel("Hora finalizacion", SwingConstants.CENTER);
-		 pHora.add(lblHora);
-		 tfHora = new JTextField();
-		 pHora.add(tfHora);
-		 add(pHora);
+		 pTiempo = new JPanel();
+		 pTiempo.setLayout(new GridLayout(1,1));
+		 lblTiempo = new JLabel("Tiempo", SwingConstants.CENTER);
+		 pHora.add(lblTiempo);
+		 tfTiempo = new JTextField();
+		 pTiempo.add(tfTiempo);
+		 add(pTiempo);
 		 
 		 btnGuardar = new JButton("Guardar cambios");
 		 btnGuardar.addActionListener(this);
@@ -92,9 +92,15 @@ public class VentanaCronometrarActividad extends JFrame implements ActionListene
 		 btnRegistrar= new JButton("Registrar actividad");
 		 btnRegistrar.addActionListener(this);
 		 btnRegistrar.setActionCommand("REGISTRAR");
-		 btnCronometrar = new JButton("Cronometrar actividad");
+		 
+		 btnCronometrar = new JButton("Iniciar cronometro");
 		 btnCronometrar.addActionListener(this);
 		 btnCronometrar.setActionCommand("CRONOMETAR");
+		 
+		 btnCronometrar = new JButton("Detener cronometro");
+		 btnCronometrar.addActionListener(this);
+		 btnCronometrar.setActionCommand("PARAR");
+		 
 		 pBotones.add(btnRegistrar);
 		 pBotones.add(btnCronometrar);
 		 add(pBotones); 
