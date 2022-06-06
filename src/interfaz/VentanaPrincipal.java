@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import model.Proyecto;
 import procesamiento.Plataforma;
 
 @SuppressWarnings("serial")
@@ -71,7 +72,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 					}
 					
 					else {
-						Plataforma.cargarProyecto(tempNombreProyecto); // Se carga toda la informacion del proyecto
+						Proyecto tempProyecto = Plataforma.cargarProyecto(tempNombreProyecto); // Se carga toda la informacion del proyecto
 
 						if (Plataforma.getProyectoActual() == null) {
 							JOptionPane.showMessageDialog(null,"El proyecto no se ha encontrado");
@@ -79,7 +80,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 						else {
 							//setVisible(false);
 							ingresando = false;
-							new VentanaAdministrarProyecto().setVisible(true);
+							new VentanaAdministrarProyecto(tempProyecto).setVisible(true);
 							//ventanaCreada = true;
 						}
 					}

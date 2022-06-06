@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import model.Proyecto;
+
 @SuppressWarnings("serial")
 public class VentanaAdministrarProyecto extends JFrame implements ActionListener
 {
@@ -19,7 +21,7 @@ public class VentanaAdministrarProyecto extends JFrame implements ActionListener
 	private JTextField tfNombre, tfDescripcion, tfFechaInicial, tfFechaFinal;
 	private JButton btnGuardar, btnParticipantes, btnTiposActividades, btnActividades, btnReporte;
 	
-	public VentanaAdministrarProyecto() {
+	public VentanaAdministrarProyecto(Proyecto tempProyecto) {
 		setTitle("Administrar proyecto");
 		setSize(800,800);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Cerrar solo ventana
@@ -37,27 +39,27 @@ public class VentanaAdministrarProyecto extends JFrame implements ActionListener
 		panelDatos.setLayout(new GridLayout(5,2));
 		
 		lblNombre = new JLabel("Nombre", SwingConstants.CENTER); //label y textfield del nombre
-		tfNombre = new JTextField();
+		tfNombre = new JTextField(tempProyecto.getNombre());
 		panelDatos.add(lblNombre);
 		panelDatos.add(tfNombre);
 		
 		lblDescripcion = new JLabel("Descripcion", SwingConstants.CENTER); //label y textfield de la descripcion
-		tfDescripcion = new JTextField();
+		tfDescripcion = new JTextField(tempProyecto.getDescripcion());
 		panelDatos.add(lblDescripcion);
 		panelDatos.add(tfDescripcion);
 		
 		lblFechaInicial = new JLabel("Fecha inicial", SwingConstants.CENTER); //label y textfield de la fecha inicial
-		tfFechaInicial = new JTextField();
+		tfFechaInicial = new JTextField(tempProyecto.getFechaInicial());
 		panelDatos.add(lblFechaInicial);
 		panelDatos.add(tfFechaInicial);
 		
 		lblFechaFinal = new JLabel("Fecha final", SwingConstants.CENTER); //label y textfield de la fecha final
-		tfFechaFinal = new JTextField();
+		tfFechaFinal = new JTextField(tempProyecto.getFechaFinal());
 		panelDatos.add(lblFechaFinal);
 		panelDatos.add(tfFechaFinal);
 		
 		lblID = new JLabel("ID", SwingConstants.CENTER); //labels del id
-		lblIDProyecto = new JLabel("0"); //TODO Aqui va el id del proyecto
+		lblIDProyecto = new JLabel(String.valueOf(tempProyecto.getId())); //TODO Aqui va el id del proyecto
 		panelDatos.add(lblID);
 		panelDatos.add(lblIDProyecto);
 		

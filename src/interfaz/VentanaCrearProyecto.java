@@ -27,9 +27,10 @@ public class VentanaCrearProyecto extends JFrame implements ActionListener
 	public VentanaCrearProyecto() {
 		
 		setTitle("Crear Proyecto"); //Titulo
-		setSize(600,600); //Tamanio ventana
+		setSize(600,400); //Tamanio ventana
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Cerrar ventana
 		setLocationRelativeTo(null);
+		setResizable(false);
 		
 		setLayout(new GridLayout (3,1));
 		
@@ -101,7 +102,7 @@ public class VentanaCrearProyecto extends JFrame implements ActionListener
 	
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
-		
+		System.out.print(tfNombreProyecto.getText());
 		if(comando.equals("CREAR")) {
 			try {
 				crearProyecto();
@@ -113,14 +114,14 @@ public class VentanaCrearProyecto extends JFrame implements ActionListener
 		}
 		
 		if (comando.equals("CANCELAR")) {
-			dispose(); //TODO Programar para que cierre esa ventana
+			this.dispose(); //TODO Programar para que cierre esa ventana
 		}
 	}
 		
 	public void crearProyecto() throws IOException {
 		String tempFechaInicial = tfDiaInicial.getText() + "/" + tfMesInicial.getText() + "/" + tfAnioInicial.getText();
 		String tempFechaFinal = tfDiaFinal.getText() + "/" + tfMesFinal.getText() + "/" + tfAnioFinal.getText();
-		
+		System.out.print(tfNombreProyecto.getText());
 		Proyecto.crearProyecto(tfNombreProyecto.getText(), tfDescripcion.getText(), tempFechaInicial, tempFechaFinal, Plataforma.getIdProyecto());
 	}
 }

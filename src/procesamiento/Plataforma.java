@@ -123,7 +123,7 @@
 
 		// Se carga toda la informacion de un proyecto dado su nombre
 		
-			public static void cargarProyecto(String nombreProyecto)
+			public static Proyecto cargarProyecto(String nombreProyecto)
 				{
 		
 					// Se recorre el ArrayList de proyectos para buscar el proyecto por el nombre
@@ -159,6 +159,7 @@
 										}
 							
 							}
+						return proyectoActual;
 
 				}
 		
