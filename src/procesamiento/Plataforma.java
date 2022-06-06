@@ -68,17 +68,24 @@
 		// Getter para la ruta del archivo de actividades del proyecto actual
 
 			public static String getRutaActividades()
-			{
-				return "./././data/Proyectos/" + Plataforma.getProyectoActual().getNombre() + "/actividades.csv";
-			}	
+				{
+					return "./././data/Proyectos/" + Plataforma.getProyectoActual().getNombre() + "/actividades.csv";
+				}	
 
 		// Getter para la ruta del archivo de participantes del proyecto actual
 
 			public static String getRutaParticipantes()
+				{
+					return "./././data/Proyectos/" + Plataforma.getProyectoActual().getNombre() + "/participantes.csv";
+				}	
+
+		// Getter para la ruta del archivo de reporte de un proyecto
+
+		public static String getRutaReporte()
 			{
-				return "./././data/Proyectos/" + Plataforma.getProyectoActual().getNombre() + "/participantes.csv";
+				return "./././data/Proyectos/" + Plataforma.getProyectoActual().getNombre() + "/reporte.csv";
 			}	
-	
+
 		// Getter para la ruta del archivo donde se guardan los iDs de proyecto
 
 			public static String getRutaIdProyectos()

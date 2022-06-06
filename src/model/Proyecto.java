@@ -7,6 +7,8 @@
 	import java.io.FileWriter;
 	import java.io.IOException;
 	import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 	import javax.swing.JOptionPane;
 	import com.csvreader.CsvWriter;
 	import procesamiento.Plataforma;
@@ -371,6 +373,15 @@
 																// en la linea
 
 																	Actividad actividad = new Actividad(partes[0], partes[1], partes[2], partes[3], partes[4], partes[5], partes[6], Long.parseLong(partes[7]), Boolean.parseBoolean(partes[8]), participante, Integer.parseInt(partes[10]));
+
+																// Se anexa el tipo de actividad 
+																// al ArrayList de tipos de actividad
+																// en caso de que no se encuentre
+
+																	if (!(tiposActividades.contains(partes[2])))
+																		{
+																			tiposActividades.add(partes[2]);
+																		}
 																
 																// Se extrae el ArrayList
 																// de actividades del
@@ -597,10 +608,14 @@
 			public static void anadirActividad(String titulo, String descripcion, String tipo, String fechaInicial, String fechaFinal, String horaInicial, String horaFinal, String tiempoRealizacion, String isTiempoReal, String autor)
 					{
 
+						// Se crea una variable para saber si existe el tipo de actividad ingresado
+
+							boolean existeTipoActividad = tiposActividades.contains(tipo);
+
 						// Se crea una variable para saber si existe un participante con el nombre del
 						// autor ingresado para esta nueva actividad
 
-						boolean existeParticipante = false;
+							boolean existeParticipante = false;
 
 						// Se crea un for para recorrer todo el ArrayList de paticipates del proycto actual
 
@@ -639,7 +654,7 @@
 
 						// Si se encuentra un participante con el nombre del autor ingresado			
 
-							if (existeParticipante)
+							if (existeParticipante && existeTipoActividad)
 								{
 
 									// Se añaden todas las actividades al archivo de actividades
@@ -718,7 +733,7 @@
 							else
 								{
 
-									System.out.println("\nNo se ha encontrado un participante con el nombre de autor ingresado.");
+									System.out.println("\nNo se ha encontrado un participante con el nombre de autor ingresado o no se ha encontrada o el tipo de actividad ingresado no existe.");
 
 								}
 
@@ -736,5 +751,181 @@
 						Plataforma.getProyectoActual().getTiposActividad().add(tipoActividad);
 
 				}
+
+		// Metodo para generar un reporte del proyecto
+
+		public static void generarReporte()
+			{
+
+		 		// Verifica si existe un archivo de reporte
+
+		 			String salidaArchivo = Plataforma.getRutaReporte();
+		 			boolean existe = new File(salidaArchivo).exists(); 
+					
+		 		// Si existe un archivo llamado asi lo borra
+
+		 			if(existe) 
+		 				{
+		 					File archivoUsuarios = new File(salidaArchivo);
+		 					archivoUsuarios.delete();
+		 				}
+					
+		 			try 
+		 				{
+
+		 					// Crea el archivo
+							
+		 						CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
+						
+		 					// Datos para identificar las columnas
+
+		 						salidaCSV.write("Nombre");
+		 						salidaCSV.write("Cantidad de actividades");
+
+		 						for (String tipo : tiposActividades)
+		 							{
+		 								salidaCSV.write("Cantidad de actividades de tipo " + tipo);
+		 							}
+
+		 						salidaCSV.write("Tiempo total invertido");
+		 						salidaCSV.write("Tiempo promedio por actividad");
+						
+		 					salidaCSV.endRecord(); // Deja de escribir en el archivo
+						
+		 					// Recorremos la lista y lo insertamos en el archivo
+		 					for(Participante participante : Plataforma.getProyectoActual().getParticipantes())
+		 						{
+
+									Map<String, String> conteo = new HashMap<>();
+									int tiempoTotal = 0;
+								
+		 							salidaCSV.write(participante.getNombre());
+		 							salidaCSV.write(Integer.toString(participante.getActividades().size()));
+
+		 							for (String tipo : tiposActividades)
+		 								{
+											if (!(conteo.containsKey(tipo)))
+												{
+													conteo.put(tipo, "0");
+												}
+		 									for (Actividad actividad : participante.getActividades())
+											 	{
+													tiempoTotal = (int) (tiempoTotal + actividad.getTiempoRelizacion());
+													if (actividad.getTipo().equals(tipo))
+														{
+															conteo.put(actividad.getTipo(), Integer.toString(Integer.parseInt(conteo.get(actividad.getTipo())) + 1));
+														}
+												}
+		 								}
+
+									
+									salidaCSV.write(participante.getNombre());
+									salidaCSV.write(Integer.toString(participante.getActividades().size()));
+
+									for (String tipo : tiposActividades)
+										{
+											salidaCSV.write(conteo.get(tipo));
+										}
+
+		 							salidaCSV.write(Integer.toString(tiempoTotal));
+		 							salidaCSV.write(Double.toString(tiempoTotal / participante.getActividades().size()));
+								
+		 							salidaCSV.endRecord(); // Deja de escribir en el archivo
+
+		 						}
+						
+		 					salidaCSV.close(); // Cierra el archivo
+						
+		 				} 
+		 				catch(IOException e) 
+		 					{
+		 						e.printStackTrace();
+		 					}
+
+			}
+
+		// public static void generarReporte()
+		// 	{
+				
+		// 		// Se crea un ArrayList para guardar los reportes de todos
+		// 		// los participantes del proyecto
+
+		// 			ArrayList<Map<String, String>> reportes = new ArrayList<Map<String, String>>();
+
+		// 		// Se recorre el ArrayList de participantes del proyecto, se
+		// 		// genera su reporte y se guarda en el ArrayList de reportes
+
+		// 			for (Participante participante : participantes)
+		// 				{						
+		// 					reportes.add(participante.generarReporte());
+		// 				}
+
+
+		// 		// Verifica si existe un archivo de reporte
+
+		// 			String salidaArchivo = Plataforma.getRutaReporte();
+		// 			boolean existe = new File(salidaArchivo).exists(); 
+						
+		// 		// Si existe un archivo llamado asi lo borra
+
+		// 			if(existe) 
+		// 				{
+		// 					File archivoUsuarios = new File(salidaArchivo);
+		// 					archivoUsuarios.delete();
+		// 				}
+						
+		// 			try 
+		// 				{
+
+		// 					// Crea el archivo
+								
+		// 						CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
+							
+		// 					// Datos para identificar las columnas
+
+		// 						salidaCSV.write("Nombre");
+		// 						salidaCSV.write("Cantidad de actividades");
+
+		// 						for (String tipo : tiposActividades)
+		// 							{
+		// 								salidaCSV.write("Cantidad de actividades de tipo " + tipo);
+		// 							}
+
+		// 						salidaCSV.write("Tiempo total invertido");
+		// 						salidaCSV.write("Tiempo promedio por actividad");
+							
+		// 					salidaCSV.endRecord(); // Deja de escribir en el archivo
+							
+		// 					// Recorremos la lista y lo insertamos en el archivo
+		// 					for(Map<String, String> reporte : reportes)
+		// 						{
+									
+		// 							salidaCSV.write(reporte.get("nombre"));
+		// 							salidaCSV.write(reporte.get("cantidadActividades"));
+
+		// 							for (String tipo : tiposActividades)
+		// 								{
+		// 									salidaCSV.write(reporte.get(tipo));
+		// 								}
+
+		// 							salidaCSV.write("tiempoTotal");
+		// 							salidaCSV.write("tiempoPromedio");
+									
+		// 							salidaCSV.endRecord(); // Deja de escribir en el archivo
+
+		// 						}
+							
+		// 					salidaCSV.close(); // Cierra el archivo
+							
+		// 				} 
+		// 				catch(IOException e) 
+		// 					{
+		// 						e.printStackTrace();
+		// 					}
+
+		// 	} 
+
+	
+
 
 	}
