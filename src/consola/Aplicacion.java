@@ -105,6 +105,12 @@
 														
 														}
 
+														if (opcion_seleccionada == 5)
+															{
+																Plataforma.getProyectoActual().generarReporte();
+																System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).getNombre());
+															}
+
 													if (opcion_seleccionada == 0)
 														{
 
@@ -190,7 +196,19 @@
 																else
 																	{
 																		seleccion = true;
-																	}	
+																	}
+
+															// System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).generarReporte().get("nombre"));
+															// System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).generarReporte().get("cantidadActividades"));
+															// System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).generarReporte().get("Recopilacion"));
+															// System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).generarReporte().get("Clasificacion"));
+															// System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).generarReporte().get("Programacion"));
+															// System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).generarReporte().get("Encuesta"));
+															// System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).generarReporte().get("Reclutamiento"));
+															// System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).generarReporte().get("tiempoTotal"));
+															// System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).generarReporte().get("tiempoPromedio"));
+
+															//System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).getNombre());
 
 														}
 
@@ -215,7 +233,7 @@
 						System.out.println("2. Registrar una nueva actividad");
 						System.out.println("3. Agregar una fecha final al proyecto");
 						System.out.println("4. Agregar un tipo de actividad al proyecto");
-						System.out.println("5. Mostrar los tipos de actividad existentes");
+						System.out.println("5. Guardar un reporte del proyecto");
 						System.out.println("0. Guardar y salir del proyecto");
 
 					}
