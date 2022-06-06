@@ -3,6 +3,7 @@ package interfaz;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,11 +13,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import model.Proyecto;
+import procesamiento.Plataforma;
+
 @SuppressWarnings("serial")
 public class VentanaCrearProyecto extends JFrame implements ActionListener
 {	
 	//Campos de texto
-	private JTextField tfNombreProyecto, tfDescripcion, tfNombreDuenio, tfCorreoDuenio, tfDiaInicial, tfMesInicial, tfAnioInicial, tfDiaFinal, tfMesFinal, tfAnioFinal;
+	private static JTextField tfNombreProyecto, tfDescripcion, tfNombreDuenio, tfCorreoDuenio, tfDiaInicial, tfMesInicial, tfAnioInicial, tfDiaFinal, tfMesFinal, tfAnioFinal;
 	// Boton confirmar
 	private JButton btnConfirmar, btnCancelar;
 	
@@ -99,16 +103,24 @@ public class VentanaCrearProyecto extends JFrame implements ActionListener
 		String comando = e.getActionCommand();
 		
 		if(comando.equals("CREAR")) {
-			JOptionPane.showMessageDialog(null, "Registrado exitosamente", "Guardar cambios", 1);
-			JOptionPane.showMessageDialog(null, "No se pudo registrar", "Guardar cambios", 0);
+			try {
+				crearProyecto();
+				JOptionPane.showMessageDialog(null, "Registrado exitosamente", "Guardar cambios", 1);
+			}
+			catch (IOException e1){
+				JOptionPane.showMessageDialog(null, "No se pudo registrar", "Guardar cambios", 0);
+			}
 		}
 		
 		if (comando.equals("CANCELAR")) {
-			cerrarVentana(); //TODO Programar para que cierre esa ventana
+			dispose(); //TODO Programar para que cierre esa ventana
 		}
 	}
 		
-	public void cerrarVentana() {
-		dispose();
+	public void crearProyecto() throws IOException {
+		String tempFechaInicial = tfDiaInicial.getText() + "/" + tfMesInicial.getText() + "/" + tfAnioInicial.getText();
+		String tempFechaFinal = tfDiaFinal.getText() + "/" + tfMesFinal.getText() + "/" + tfAnioFinal.getText();
+		
+		Proyecto.crearProyecto(tfNombreProyecto.getText(), tfDescripcion.getText(), tempFechaInicial, tempFechaFinal, Plataforma.getIdProyecto());
 	}
 }

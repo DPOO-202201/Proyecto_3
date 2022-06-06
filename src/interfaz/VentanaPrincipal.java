@@ -11,8 +11,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import procesamiento.Plataforma;
+
 @SuppressWarnings("serial")
 public class VentanaPrincipal extends JFrame implements ActionListener {
+	
+	boolean continuar = true;
+	boolean seleccion = false;
 	
 	private JLabel lblTitulo;
 	
@@ -64,13 +69,19 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 					if (tempNombreProyecto.equals("")) { //Si no escribio un nombre
 						JOptionPane.showMessageDialog(null,"Debe digitar un nombre.");
 					}
+					
 					else {
-						//Consultar y ver si existe
-						ingresando = false;
-						//ingresado = true;
-						//setVisible(false);
-						new VentanaAdministrarProyecto().setVisible(true);
-						//ventanaCreada = true;
+						Plataforma.cargarProyecto(tempNombreProyecto); // Se carga toda la informacion del proyecto
+
+						if (Plataforma.getProyectoActual() == null) {
+							JOptionPane.showMessageDialog(null,"El proyecto no se ha encontrado");
+						}
+						else {
+							//setVisible(false);
+							ingresando = false;
+							new VentanaAdministrarProyecto().setVisible(true);
+							//ventanaCreada = true;
+						}
 					}
 				}
 				catch (Exception e1) { //Si cancela el procedimiento
@@ -84,6 +95,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 	public static void main (String[] args)
     {
         VentanaPrincipal  ventana = new  VentanaPrincipal( );
+        
+		Plataforma.cargarIdActividad(Plataforma.getRutaIdActividades());
+		Plataforma.cargarIdProyecto(Plataforma.getRutaIdProyectos());
+		Plataforma.cargarProyectos(Plataforma.getRutaProyectos());
+        
         ventana.setVisible( true );
     }
 }
