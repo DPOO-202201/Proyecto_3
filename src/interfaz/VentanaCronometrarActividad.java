@@ -36,7 +36,7 @@ public class VentanaCronometrarActividad extends JFrame implements ActionListene
 		 lblAutor = new JLabel("Autor", SwingConstants.CENTER);
 		 pAutor.add(lblAutor);
 		 cbAutor = new JComboBox<String>();
-		 //TODO Ciclo para añadir todos los participantes
+		 //TODO Ciclo para aï¿½adir todos los participantes
 		 pAutor.add(cbAutor);
 		 add(pAutor);
 		 
@@ -45,7 +45,7 @@ public class VentanaCronometrarActividad extends JFrame implements ActionListene
 		 lblActividad = new JLabel("Actividad", SwingConstants.CENTER);
 		 pActividad.add(lblActividad);
 		 cbActividad= new JComboBox<String>();
-		 //TODO Ciclo para añadir todas las actividades del participante
+		 //TODO Ciclo para aï¿½adir todas las actividades del participante
 		 pActividad.add(cbActividad);
 		 add(pActividad);
 		 
@@ -76,7 +76,7 @@ public class VentanaCronometrarActividad extends JFrame implements ActionListene
 		 pTiempo = new JPanel();
 		 pTiempo.setLayout(new GridLayout(1,1));
 		 lblTiempo = new JLabel("Tiempo", SwingConstants.CENTER);
-		 pHora.add(lblTiempo);
+		 pTiempo.add(lblTiempo);
 		 tfTiempo = new JTextField();
 		 pTiempo.add(tfTiempo);
 		 add(pTiempo);

@@ -108,7 +108,19 @@
 														if (opcion_seleccionada == 5)
 															{
 																Plataforma.getProyectoActual().generarReporte();
-																System.out.println(Plataforma.getProyectoActual().getParticipantes().get(0).getNombre());
+															}
+
+														if (opcion_seleccionada == 6)
+															{
+																
+																String nombre;
+																String descripcion;
+																String tipo;
+																String fechaInicial;
+																String fechaFinal;
+																String horaInicial;
+																String horaFinal;
+
 															}
 
 													if (opcion_seleccionada == 0)
@@ -230,10 +242,11 @@
 
 						System.out.println("\nOpciones de la aplicacion:\n");
 						System.out.println("1. Agregar un nuevo participante al proyecto");
-						System.out.println("2. Registrar una nueva actividad");
+						System.out.println("2. Agregar una nueva actividad");
 						System.out.println("3. Agregar una fecha final al proyecto");
 						System.out.println("4. Agregar un tipo de actividad al proyecto");
 						System.out.println("5. Guardar un reporte del proyecto");
+						System.out.println("6. Agregar una nueva tarea");
 						System.out.println("0. Guardar y salir del proyecto");
 
 					}
@@ -259,6 +272,7 @@
 
 						Plataforma.cargarIdActividad(Plataforma.getRutaIdActividades());
 						Plataforma.cargarIdProyecto(Plataforma.getRutaIdProyectos());
+						Plataforma.cargarIdTarea(Plataforma.getRutaIdTareas());
 
 						Plataforma.cargarProyectos(Plataforma.getRutaProyectos());
 

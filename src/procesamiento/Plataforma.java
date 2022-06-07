@@ -30,6 +30,11 @@
 			private static String rutaIdActividades = "./././data/iDs/iDActividad.csv";
 
 		// Se crea esta variable para guardar la ruta del archivo donde se
+		// guarda el iD de las tareas
+			
+			private static String rutaIdTareas = "./././data/iDs/iDTarea.csv";
+
+		// Se crea esta variable para guardar la ruta del archivo donde se
 		// guardan los proyectos
 			
 			private static String rutaProyectos = "./././data/proyectos.csv";
@@ -48,6 +53,13 @@
 			
 			private static int iDActividad;
 
+		// Se crea el iDTarea para asiganrsele a cada tarea nueva creada,
+		// este se actualiza cada que se crea una nueva tarea y cada que se
+		// inicia la aplicación para asignarle a esta variable el numero de iD
+		// por el que se quedo en la última ejecuón.
+			
+			private static int iDTarea;
+
 		// Se crea el pryectoActual para guardar el proyecto que se esté
 		// manejando en el momento en caso de que se haya seleccionado uno
 			
@@ -65,6 +77,13 @@
 					return iDProyecto;
 				}
 
+		// Getter para la variable iDTarea
+
+		public static int getIdTarea()
+			{
+				return iDTarea;
+			}
+		
 		// Getter para la ruta del archivo de actividades del proyecto actual
 
 			public static String getRutaActividades()
@@ -79,9 +98,16 @@
 					return "./././data/Proyectos/" + Plataforma.getProyectoActual().getNombre() + "/participantes.csv";
 				}	
 
+		// Getter para la ruta del archivo de tareas del proyecto actual
+
+			public static String getRutaTareas()
+				{
+					return "./././data/Proyectos/" + Plataforma.getProyectoActual().getNombre() + "/tareas.csv";
+				}	
+
 		// Getter para la ruta del archivo de reporte de un proyecto
 
-		public static String getRutaReporte()
+			public static String getRutaReporte()
 			{
 				return "./././data/Proyectos/" + Plataforma.getProyectoActual().getNombre() + "/reporte.csv";
 			}	
@@ -106,6 +132,13 @@
 				{
 					return rutaIdActividades;
 				}
+
+		// Getter para la variable rutaiDActividades
+
+			public static String getRutaIdTareas()
+			{
+				return rutaIdTareas;
+			}
 
 		// Getter para la variable proyectoActual
 
@@ -399,6 +432,90 @@
 
 			}			
 
+		// Funcion para cargar el contador de IDs, el numero que se encuentre en
+		// data/iDs/iDTarea.csv
+		
+			public static void cargarIdTarea(String rutaArchivo)
+		{
+
+				// Se crean variables necesarias para la carga del archivo
+
+					BufferedReader lector;
+					String linea;
+					String partes[];
+		
+				// Se crea un try por si no se encuentra el archivo en la
+				// ruta
+
+					try
+						{
+
+							//Se lee el archivo y su primera linea
+
+								lector = new BufferedReader(new FileReader(rutaArchivo));
+								linea = lector.readLine();
+
+							// Se guarda el iD en la variable iDActvidad
+											
+								partes = linea.split("");
+								iDActividad = Integer.parseInt(partes[0]);
+
+								
+							// Una vez finalizada la lectura del archivo,
+							// se limpian las variables usadas
+								
+								lector.close();
+								linea = null;
+								partes = null;
+			
+						} catch (Exception e)
+							{
+								JOptionPane.showMessageDialog(null, e);
+							}
+			}
+
+		// Función para aumentar en 1 el iD guardado en data/iDs/iDTarea.csv
+
+			public static void modificarIdTarea(String rutaArchivo) 
+		{
+			
+			// Verifica que ya exista el archivo donde se guarda
+			// el iD
+
+				boolean existe = new File(rutaArchivo).exists();
+				
+			// Si existe un archivo llamado asi lo borra
+
+				if(existe) {
+
+					File archivo = new File(rutaArchivo);
+					archivo.delete();
+				
+				}
+
+			// Se crea un try por si rutaArchivo no es valida	
+				
+				try {
+
+					// Crea el archivo
+					
+						CsvWriter salidaCSV = new CsvWriter(new FileWriter(rutaArchivo, true), ';');
+					
+					// Escribe el nuevo iD en el archivo
+
+						salidaCSV.write(Integer.toString(iDActividad + 1));
+						salidaCSV.endRecord();
+					
+					// Cierra el archivo
+
+						salidaCSV.close();
+					
+				} catch(IOException e) {
+					e.printStackTrace();
+				} 
+
+		}	
+		
 		// Actualiza los participantes del archivo de participantes del proyecto
 		// actual con la informacion del ArrayList de participantes
 

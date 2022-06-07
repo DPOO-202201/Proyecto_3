@@ -7,8 +7,8 @@
 	import java.io.FileWriter;
 	import java.io.IOException;
 	import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+	import java.util.HashMap;
+	import java.util.Map;
 	import javax.swing.JOptionPane;
 	import com.csvreader.CsvWriter;
 	import procesamiento.Plataforma;
@@ -28,6 +28,7 @@ import java.util.Map;
 			private static ArrayList<String> tiposActividades;
 			private static ArrayList<Participante> participantes = new ArrayList<Participante>();
 			private static ArrayList<Actividad> actividades = new ArrayList<Actividad>();
+			private ArrayList<Tarea> WBS = new ArrayList<Tarea>();
 
 		// Constructor	
 		
@@ -47,121 +48,19 @@ import java.util.Map;
 						this.iD = iD;
 						tiposActividades = new ArrayList<String>();
 						participantes = new ArrayList<Participante>();
+						WBS = new ArrayList<Tarea>();
+
 						
 					}
 
-		// Función para crear la carpeta y los archivos del proyecto en la carpeta
+		// Función para crear la carpeta del proyecto en la carpeta
 		// data/Proyectos
 
 			public static void crearArchivoProyecto(String nombreProyecto) throws IOException 
-			{
-				
-				// Crea la carpeta del proyecto
-
-					String carpetaUbicacion = "./././data/Proyectos/" + nombreProyecto;
-					File carpeta = new File(carpetaUbicacion);
-					carpeta.mkdirs();
-
-				// Crea el archivo de actividades del proyecto
-
-					String actividadesUbicacion = "./././data/Proyectos/" + nombreProyecto + "/actividades.csv";
-					File actividades = new File(actividadesUbicacion);
-					actividades.createNewFile();
-
-				// Crea el encabezado de las columnas del proyecto	
-
-					// Verfica que el archivo ya exista
-
-						String salidaArchivo = actividadesUbicacion;
-						boolean existe = new File(salidaArchivo).exists(); 
-					
-					// Si ya existe el archivo, lo borra
-
-						if(existe)
-							{
-
-								File archivoUsuarios = new File(salidaArchivo);
-								archivoUsuarios.delete();
-							
-							}
-
-					// Se crea un try por si la ruta del archivo no es valida
-					
-						try 
-							{
-
-								CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';'); // Crea el archivo
-							
-								// Escribe la primera fila del archivo con el nombre de
-								// las columnas
-
-									salidaCSV.write("titulo");
-									salidaCSV.write("descripcion");
-									salidaCSV.write("tipo");
-									salidaCSV.write("fechaInicial");
-									salidaCSV.write("fechaFinal");
-									salidaCSV.write("horaInicial");
-									salidaCSV.write("horaFinal");
-									salidaCSV.write("tiempoRealizacion");
-									salidaCSV.write("isTiempoReal");
-									salidaCSV.write("autor");
-									salidaCSV.write("iD");
-								
-								salidaCSV.endRecord(); // Deja de escribir en el archivo
-								
-								salidaCSV.close(); // Cierra el archivo
-							
-							} catch(IOException e) {
-							e.printStackTrace();
-						}   
-
-				// Crea el archivo de participantes del proyecto
-
-					String participantesUbicacion = "./././data/Proyectos/" + nombreProyecto + "/participantes.csv";
-					File participantes = new File(participantesUbicacion);
-					participantes.createNewFile();
-
-					// Crea el encabezado de las columnas del proyecto	
-
-						// Verfica que el archivo ya exista
-
-							salidaArchivo = participantesUbicacion;
-							existe = new File(salidaArchivo).exists(); 
-					
-						// Si ya existe el archivo, lo borra
-
-							if(existe)
-								{
-
-									File archivoUsuarios = new File(salidaArchivo);
-									archivoUsuarios.delete();
-								
-								}
-
-						// Se crea un try por si la ruta del archivo no es valida
-					
-							try 
-								{
-
-									// Crea el archivo
-
-										CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ',');
-									
-									// Datos para identificar las columnas
-
-										salidaCSV.write("nombre");
-										salidaCSV.write("correo");
-										salidaCSV.write("isDuenio");
-										salidaCSV.write("actividadesRealizadas");
-									
-									salidaCSV.endRecord(); // Deja de escribir en el archivo
-
-									salidaCSV.close(); // Cierra el archivo
-								
-								} catch(IOException e) {
-								e.printStackTrace();
-							}
-	
+			{	
+				String carpetaUbicacion = "./././data/Proyectos/" + nombreProyecto;
+				File carpeta = new File(carpetaUbicacion);
+				carpeta.mkdirs();
 			}
 		
 		// Getter para los participantes del proyecto	
@@ -213,6 +112,13 @@ import java.util.Map;
 				return actividades;
 			}
 
+		// Getter para el atributo actividades
+		
+			public ArrayList<Tarea> getWBS()
+				{
+					return WBS;
+				}
+		
 		// Getter para el atributo tiposActividad
 
 			public static ArrayList<String> getTiposActividad()
@@ -754,178 +660,205 @@ import java.util.Map;
 
 		// Metodo para generar un reporte del proyecto
 
-		public static void generarReporte()
-			{
+			public static void generarReporte()
+				{
 
-		 		// Verifica si existe un archivo de reporte
+					// Verifica si existe un archivo de reporte
 
-		 			String salidaArchivo = Plataforma.getRutaReporte();
-		 			boolean existe = new File(salidaArchivo).exists(); 
-					
-		 		// Si existe un archivo llamado asi lo borra
-
-		 			if(existe) 
-		 				{
-		 					File archivoUsuarios = new File(salidaArchivo);
-		 					archivoUsuarios.delete();
-		 				}
-					
-		 			try 
-		 				{
-
-		 					// Crea el archivo
-							
-		 						CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
+						String salidaArchivo = Plataforma.getRutaReporte();
+						boolean existe = new File(salidaArchivo).exists(); 
 						
-		 					// Datos para identificar las columnas
+					// Si existe un archivo llamado asi lo borra
 
-		 						salidaCSV.write("Nombre");
-		 						salidaCSV.write("Cantidad de actividades");
-
-		 						for (String tipo : tiposActividades)
-		 							{
-		 								salidaCSV.write("Cantidad de actividades de tipo " + tipo);
-		 							}
-
-		 						salidaCSV.write("Tiempo total invertido");
-		 						salidaCSV.write("Tiempo promedio por actividad");
+						if(existe) 
+							{
+								File archivoUsuarios = new File(salidaArchivo);
+								archivoUsuarios.delete();
+							}
 						
-		 					salidaCSV.endRecord(); // Deja de escribir en el archivo
-						
-		 					// Recorremos la lista y lo insertamos en el archivo
-		 					for(Participante participante : Plataforma.getProyectoActual().getParticipantes())
-		 						{
+						try 
+							{
 
-									Map<String, String> conteo = new HashMap<>();
-									int tiempoTotal = 0;
+								// Crea el archivo
 								
-		 							salidaCSV.write(participante.getNombre());
-		 							salidaCSV.write(Integer.toString(participante.getActividades().size()));
+									CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
+							
+								// Datos para identificar las columnas
 
-		 							for (String tipo : tiposActividades)
-		 								{
-											if (!(conteo.containsKey(tipo)))
-												{
-													conteo.put(tipo, "0");
-												}
-		 									for (Actividad actividad : participante.getActividades())
-											 	{
-													tiempoTotal = (int) (tiempoTotal + actividad.getTiempoRelizacion());
-													if (actividad.getTipo().equals(tipo))
-														{
-															conteo.put(actividad.getTipo(), Integer.toString(Integer.parseInt(conteo.get(actividad.getTipo())) + 1));
-														}
-												}
-		 								}
-
-									
-									salidaCSV.write(participante.getNombre());
-									salidaCSV.write(Integer.toString(participante.getActividades().size()));
+									salidaCSV.write("Nombre");
+									salidaCSV.write("Cantidad de actividades");
 
 									for (String tipo : tiposActividades)
 										{
-											salidaCSV.write(conteo.get(tipo));
+											salidaCSV.write("Cantidad de actividades de tipo " + tipo);
 										}
 
-		 							salidaCSV.write(Integer.toString(tiempoTotal));
-		 							salidaCSV.write(Double.toString(tiempoTotal / participante.getActividades().size()));
-								
-		 							salidaCSV.endRecord(); // Deja de escribir en el archivo
-
-		 						}
-						
-		 					salidaCSV.close(); // Cierra el archivo
-						
-		 				} 
-		 				catch(IOException e) 
-		 					{
-		 						e.printStackTrace();
-		 					}
-
-			}
-
-		// public static void generarReporte()
-		// 	{
-				
-		// 		// Se crea un ArrayList para guardar los reportes de todos
-		// 		// los participantes del proyecto
-
-		// 			ArrayList<Map<String, String>> reportes = new ArrayList<Map<String, String>>();
-
-		// 		// Se recorre el ArrayList de participantes del proyecto, se
-		// 		// genera su reporte y se guarda en el ArrayList de reportes
-
-		// 			for (Participante participante : participantes)
-		// 				{						
-		// 					reportes.add(participante.generarReporte());
-		// 				}
-
-
-		// 		// Verifica si existe un archivo de reporte
-
-		// 			String salidaArchivo = Plataforma.getRutaReporte();
-		// 			boolean existe = new File(salidaArchivo).exists(); 
-						
-		// 		// Si existe un archivo llamado asi lo borra
-
-		// 			if(existe) 
-		// 				{
-		// 					File archivoUsuarios = new File(salidaArchivo);
-		// 					archivoUsuarios.delete();
-		// 				}
-						
-		// 			try 
-		// 				{
-
-		// 					// Crea el archivo
-								
-		// 						CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
+									salidaCSV.write("Tiempo total invertido");
+									salidaCSV.write("Tiempo promedio por actividad");
 							
-		// 					// Datos para identificar las columnas
-
-		// 						salidaCSV.write("Nombre");
-		// 						salidaCSV.write("Cantidad de actividades");
-
-		// 						for (String tipo : tiposActividades)
-		// 							{
-		// 								salidaCSV.write("Cantidad de actividades de tipo " + tipo);
-		// 							}
-
-		// 						salidaCSV.write("Tiempo total invertido");
-		// 						salidaCSV.write("Tiempo promedio por actividad");
+								salidaCSV.endRecord(); // Deja de escribir en el archivo
 							
-		// 					salidaCSV.endRecord(); // Deja de escribir en el archivo
-							
-		// 					// Recorremos la lista y lo insertamos en el archivo
-		// 					for(Map<String, String> reporte : reportes)
-		// 						{
+								// Recorremos la lista y lo insertamos en el archivo
+								for(Participante participante : Plataforma.getProyectoActual().getParticipantes())
+									{
+
+										Map<String, String> conteo = new HashMap<>();
+										int tiempoTotal = 0;
 									
-		// 							salidaCSV.write(reporte.get("nombre"));
-		// 							salidaCSV.write(reporte.get("cantidadActividades"));
+										salidaCSV.write(participante.getNombre());
+										salidaCSV.write(Integer.toString(participante.getActividades().size()));
 
-		// 							for (String tipo : tiposActividades)
-		// 								{
-		// 									salidaCSV.write(reporte.get(tipo));
-		// 								}
+										for (String tipo : tiposActividades)
+											{
+												if (!(conteo.containsKey(tipo)))
+													{
+														conteo.put(tipo, "0");
+													}
+												for (Actividad actividad : participante.getActividades())
+													{
+														tiempoTotal = (int) (tiempoTotal + actividad.getTiempoRelizacion());
+														if (actividad.getTipo().equals(tipo))
+															{
+																conteo.put(actividad.getTipo(), Integer.toString(Integer.parseInt(conteo.get(actividad.getTipo())) + 1));
+															}
+													}
+											}
 
-		// 							salidaCSV.write("tiempoTotal");
-		// 							salidaCSV.write("tiempoPromedio");
+										
+										salidaCSV.write(participante.getNombre());
+										salidaCSV.write(Integer.toString(participante.getActividades().size()));
+
+										for (String tipo : tiposActividades)
+											{
+												salidaCSV.write(conteo.get(tipo));
+											}
+
+										salidaCSV.write(Integer.toString(tiempoTotal));
+										salidaCSV.write(Double.toString(tiempoTotal / participante.getActividades().size()));
 									
-		// 							salidaCSV.endRecord(); // Deja de escribir en el archivo
+										salidaCSV.endRecord(); // Deja de escribir en el archivo
 
-		// 						}
+									}
 							
-		// 					salidaCSV.close(); // Cierra el archivo
+								salidaCSV.close(); // Cierra el archivo
 							
-		// 				} 
-		// 				catch(IOException e) 
-		// 					{
-		// 						e.printStackTrace();
-		// 					}
+							} 
+							catch(IOException e) 
+								{
+									e.printStackTrace();
+								}
 
-		// 	} 
+				}
 
-	
+		// Metodo para añadir una tarea al proyecto
 
+				public void anadirTarea
+				(
+
+					String nombre,
+					String descripcion,
+					String tipo,
+					String fechaInicial,
+					String fechaFinal,
+					String horaInicial,
+					String horaFinal
+
+				)
+
+					{
+
+						// Se llama el iD de tarea disponible
+							
+							int iD = Plataforma.getIdTarea();
+						
+						// Se añade la tarea a la WBS
+
+							WBS.add(new Tarea(iD, nombre, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal));
+
+						// Se crea un nuevo iD y guarda para la proxima tarea
+
+							Plataforma.modificarIdTarea(Plataforma.getRutaIdTareas());
+							Plataforma.cargarIdTarea(Plataforma.getRutaIdTareas());
+
+						// Se añaden todas las actividades al archivo de actividades
+
+								String salidaArchivo = Plataforma.getRutaTareas();
+								boolean existe = new File(salidaArchivo).exists(); // Verifica si existe
+								
+								// Si existe un archivo llamado asi lo borra
+
+									if(existe) 
+									{
+
+										File archivoUsuarios = new File(salidaArchivo);
+										archivoUsuarios.delete();
+
+									}
+								
+								try 
+								{
+
+									// Crea el archivo
+										
+										CsvWriter salidaCSV = new CsvWriter(new FileWriter(salidaArchivo, true), ';');
+									
+									// Datos para identificar las columnas
+
+										salidaCSV.write("iD");
+										salidaCSV.write("nombre");
+										salidaCSV.write("descripcion");
+										salidaCSV.write("tipo");
+										salidaCSV.write("autores");
+										salidaCSV.write("fechaInicial");
+										salidaCSV.write("fechaFinal");
+										salidaCSV.write("horaInicial");
+										salidaCSV.write("horaFinal");
+										salidaCSV.write("actividades");
+										salidaCSV.write("subTareas");
+									
+									salidaCSV.endRecord(); // Deja de escribir en el archivo
+									
+									// Recorremos la lista y lo insertamos en el archivo
+									for(Tarea tarea : Plataforma.getProyectoActual().getWBS())
+										{
+											
+											salidaCSV.write(Integer.toString(tarea.getId()));
+											salidaCSV.write(tarea.getNombre());
+											salidaCSV.write(tarea.getDescripcion());
+											salidaCSV.write(tarea.getTipo());
+
+											String autores = "";
+											for (Participante autor : tarea.getAutores())
+												{
+													autores = autores + autor.getNombre() + ".";
+												}
+											salidaCSV.write(autores);
+
+											salidaCSV.write(tarea.getFechaFinal());
+											salidaCSV.write(tarea.getFechaFinal());
+											salidaCSV.write(tarea.getHoraInicial());
+											salidaCSV.write(tarea.getHoraFinal());
+
+											String actividades = ""; 
+
+											salidaCSV.write(actividades);
+											salidaCSV.write(tarea);
+
+											
+											salidaCSV.endRecord(); // Deja de escribir en el archivo
+
+										}
+									
+									salidaCSV.close(); // Cierra el archivo
+
+									Plataforma.actualizarParticipantes(Plataforma.getRutaParticipantes());
+									
+								} 
+								catch(IOException e) 
+									{
+										e.printStackTrace();
+									}
+
+					}
 
 	}
