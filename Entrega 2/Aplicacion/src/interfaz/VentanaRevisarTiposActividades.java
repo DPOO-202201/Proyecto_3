@@ -20,7 +20,7 @@ public class VentanaRevisarTiposActividades extends JFrame implements ActionList
 	private JLabel lblTitulo;
 	private JPanel pTipos,pBotones;
 	private JButton btnModificar, btnCrear;
-	private JList lstTiposActividad;
+	private JList<String> lstTiposActividad;
 	
 	public VentanaRevisarTiposActividades() {
 		setTitle("Tipos de actividades");
@@ -33,6 +33,8 @@ public class VentanaRevisarTiposActividades extends JFrame implements ActionList
 		
 		pTipos = new JPanel(); //nuevo panel que tendra todos los tipos existentes en varios Jlabels
 		//TODO Ciclo para agregar todos los tipos de actividades
+		lstTiposActividad = new JList<String>();
+		pTipos.add(lstTiposActividad);
 		add(pTipos,BorderLayout.WEST);
 		
 		pBotones = new JPanel(); //nuevo panel para los botones
