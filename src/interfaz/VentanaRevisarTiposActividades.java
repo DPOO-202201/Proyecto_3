@@ -20,7 +20,7 @@ public class VentanaRevisarTiposActividades extends JFrame implements ActionList
 	private JLabel lblTitulo;
 	private JPanel pTipos,pBotones;
 	private JButton btnModificar, btnCrear;
-	private JList lstTiposActividad;
+	private JList<String> lstTiposActividad;
 	
 	public VentanaRevisarTiposActividades() {
 		setTitle("Tipos de actividades");
