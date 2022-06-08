@@ -10,7 +10,7 @@ public class Tarea {
         String nombre;
         String descripcion;
         String tipo;
-        ArrayList<Participante> autores =new ArrayList<Participante>();
+        ArrayList<Participante> autores = new ArrayList<Participante>();
         String fechaInicial;
         String fechaFinal;
         String horaInicial;
@@ -48,40 +48,121 @@ public class Tarea {
   
     // Metodos
 
-        public void anadirTarea
+        // Metodo para obtener el atributo iD
+
+            public int getId()
+                {
+                    return iD;
+                }
+
+        // Metodo para obtener el atributo nombre
+
+            public String getNombre()
+                {
+                    return nombre;
+                }
+
+        // Metodo para obtener el atributo descripcion
+
+            public String getDescripcion()
+                {
+                    return descripcion;
+                }
+
+        // Metodo para obtener el atributo tipo
+
+            public String getTipo()
+                {
+                    return tipo;
+                }
+
+        // Metodo para obtener el atributo autores
+
+            public ArrayList<Participante> getAutores()
+                {
+                    return autores;
+                }
+
+        // Metodo para obtener el atributo fechaInicial
+
+            public String getFechaInicial()
+                {
+                    return fechaInicial;
+                }
+
+        // Metodo para obtener el atributo fechaFinal
+
+            public String getFechaFinal()
+                {
+                    return fechaFinal;
+                }
+
+        // Metodo para obtener el atributo horaInicial
+
+            public String getHoraInicial()
+                {
+                    return horaInicial;
+                }
+
+        // Metodo para obtener el atributo horaFinal
+
+            public String getHoraFinal()
+                {
+                    return horaFinal;
+                }
+
+        // Metodo para obtener el atributo actividades
+
+            public ArrayList<Actividad> getActividades()
+                {
+                    return actividades;
+                }
+
+        // Metodo para obtener el atributo subTareas
+
+            public ArrayList<Tarea> getSubTareas()
+                {
+                    return subTareas;
+                }
+
+        // Metodo para añadir una subtarea a la tarea
+
+            public void anadirSubTarea
+                (
+
+                    int iD,
+                    String nombre,
+                    String descripcion,
+                    String tipo,
+                    String fechaInicial,
+                    String fechaFinal,
+                    String horaInicial,
+                    String horaFinal
+                )
+                    {
+                        subTareas.add(new Tarea(iD, nombre, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal));
+                    }
+
+        // Metodo para añadir una actividad a la tarea
+
+            public void anadirActividad
             (
 
-                int iD,
-                String nombre,
+                String titulo, 
                 String descripcion,
                 String tipo,
                 String fechaInicial,
-                String fechaFinal,
+                String fechaFinal, 
                 String horaInicial,
-                String horaFinal
+                String horaFinal,
+                long tiempoRealizacion,
+                boolean isTiempoReal, 
+                Participante autor,
+                int iD
+
             )
                 {
-                    subTareas.add(new Tarea(iD, nombre, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal));
+                    actividades.add(new Actividad(titulo, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal, tiempoRealizacion, isTiempoReal, autor, iD));
                 }
-
-        public void anadirActividad
-        (
-
-            String titulo, 
-            String descripcion,
-            String tipo,
-            String fechaInicial,
-            String fechaFinal, 
-            String horaInicial,
-            String horaFinal,
-            long tiempoRealizacion,
-            boolean isTiempoReal, 
-            Participante autor,
-            int iD
-
-        )
-            {
-                actividades.add(new Actividad(titulo, descripcion, tipo, fechaInicial, fechaFinal, horaInicial, horaFinal, tiempoRealizacion, isTiempoReal, autor, iD));
-            }
                 
 }
